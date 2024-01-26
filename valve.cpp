@@ -5,6 +5,7 @@
 
 
 
+
 Valve::Valve(QWidget *parent)
     : WidgetDiagramElement(parent)
   , myTriangle1(this)
@@ -23,10 +24,13 @@ Valve::Valve(QWidget *parent)
     settings.currSize = settings.startSize;
     qDebug() << "Valve::Valve" << settings.currX << settings.currY << settings.currSize;
 
-    drawTriangle();
+   // drawTriangle();
 
-    move(settings.currX,settings.currY);
-    resize(settings.currSize,settings.currSize);
+   // move(settings.currX,settings.currY);
+   // resize(settings.currSize,settings.currSize);
+
+    timerId = startTimer(2000, Qt::CoarseTimer);
+
 }
 
 
@@ -148,7 +152,7 @@ void Valve::updateStatus()
         break;
     }
 
-    updateWidget();
+ //   updateWidget();
 }
 /*
 void Valve::loadSettings()
@@ -209,23 +213,28 @@ void Valve::setNewPosition(float koef)
     settings.currX = int(settings.startX /koef);
     settings.currY = int(settings.startY / koef);
     settings.currSize = int (settings.startSize/koef);
-
-    qDebug() << " Valve::setNewPosition " << settings.currX << settings.currY << settings.currSize << koef;
+    qDebug() << "Valve::setNewPosition" << koef;
    // move(settings.currX,settings.currY);
-  //  resize(settings.currSize,settings.currSize);
+    //resize(settings.currSize,settings.currSize);
     drawTriangle();
+
+    move(settings.currX,settings.currY);
+    resize(settings.currSize,settings.currSize);
+
 }
 
 void Valve::updateSettings()
 {
-  //  qDebug() << "Valve updateSettings";
+    qDebug() << "Valve updateSettings";
     settings.currX = settings.startX;
     settings.currY = settings.startY;
     settings.currSize = settings.currSize;
 
+   // drawTriangle();
     move(settings.currX,settings.currY);
-    // resize(settings.triangSize, settings.triangSize );
+    resize(settings.currSize, settings.currSize );
 
+   // killTimer(timerId);
 
     if(settings.status == 0){        // 0 stop, 1 ->, 2<-)
         killTimer(timerId);
@@ -248,28 +257,28 @@ void Valve::drawTriangle()
     qDebug() << "Valve    triangSize" << mySize;
     myTriangle1.setGeometry(0,0,mySize,mySize); // triangle A
     myTriangle1.setSize(mySize,90);   // size and orientation
-    myTriangle1.update();
+    //myTriangle1.update();
 
     myTriangle2.setGeometry(0,0,mySize,mySize); // triangle B
     myTriangle2.setSize(mySize,180);   // size and orientation
-    myTriangle2.update();
+   // myTriangle2.update();
 
     myTriangle3.setGeometry(0,0,mySize,mySize); // triangle C
     myTriangle3.setSize(mySize,270);   // size and orientation
-    myTriangle3.update();
+   // myTriangle3.update();
 
     myTriangle4.setGeometry(0,0,mySize,mySize); // triangle B inverse
     myTriangle4.setSize(mySize,0);   // size and orientation
-    myTriangle4.update();
+   // myTriangle4.update();
 
-    resize(settings.currSize,settings.currSize);
-    move(settings.currX,settings.currY);
+  //  resize(settings.currSize,settings.currSize);  //Strādā
+  //  move(settings.currX,settings.currY);  //Strādā, bet ciklā
 }
 
 void Valve::timerEvent(QTimerEvent *event){
 
     Q_UNUSED (event);
-
+    qDebug() << "timerEvent(QTimerEvent " << att;
     att +=1;
     if (att%2){
         settings.status = ValveStatus::OpenAC;
@@ -277,13 +286,26 @@ void Valve::timerEvent(QTimerEvent *event){
     else{
         settings.status = ValveStatus::Close;
     }
+
+
+
+    killTimer(timerId);
+    update();
+
+
+
     //qDebug() << "Valve::timerEvent " << att;
     // updateSettings();
     // update();
-    setMyStyle();
-    drawTriangle();
-    update();
+    //setMyStyle();
+
+   // drawTriangle();
+
+   // update();
   //  updateStatus();
+  //  resize(settings.currSize,settings.currSize);
+  //  move(settings.currX,settings.currY);
+
 }
 
 

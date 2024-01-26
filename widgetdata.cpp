@@ -57,7 +57,7 @@ void WidgetData::initData()
     add(WidgetType::Pump,       WidgetName::Pump1,  100,     300    ,50);
 
     add(WidgetType::Pipe,       WidgetName::Pipe1,  300,     100    ,0);
-    add(WidgetType::Valve,      WidgetName::Valve1,  300,     300    ,50);
+    add(WidgetType::Valve,      WidgetName::Valve1,  300,     100    ,50);
     //add(WidgetType::Pipe,     WidgetName::Pipe3,  100,     300    ,0);
     // add(WidgetType::Pipe,     WidgetName::Pipe4,  300,     300    ,0);
 

@@ -71,7 +71,7 @@ private:
     Mix mix;
 
     int valveStyleAngle;
-    int valveWidgSize;
+    int minWidgSize;
     int valveStatus;
     int areaY;
     int areaX;

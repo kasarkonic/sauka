@@ -131,7 +131,7 @@ void Servicepump::on_lineEdit_Name_editingFinished()
 {
     QString str = ui->lineEdit_Name->text();
     pump->settings.name = str;
-    //qDebug() << valve->settings.name;
+
    // pump->updateSettings();
 }
 
@@ -184,7 +184,7 @@ void Servicepump::on_lineEdit_note_editingFinished()
 {
     QString str = ui->lineEdit_note->text();
     pump->settings.note = str;
-    //qDebug() << valve->settings.name;
+
     pump->updateSettings();
 }
 

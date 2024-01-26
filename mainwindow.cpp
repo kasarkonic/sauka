@@ -104,14 +104,14 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     qDebug() << "resizeEvent X=" << size().width() << "Y=" <<  size().height() << "koef= " << koef;
 
     if(areaY/20 >= areaX/30){
-        valveWidgSize = areaX/30;   // minWidth
+        minWidgSize = areaX/30;   // minWidth
     }
     {
-        valveWidgSize = areaY/20; // minHeight
+        minWidgSize = areaY/20; // minHeight
     }
 
-    if(valveWidgSize < 15)
-        valveWidgSize = 15;
+    if(minWidgSize < 15)
+        minWidgSize = 15;
 
     global.zoomKoef = koef;
     resizeAllKoef(koef);
@@ -443,7 +443,7 @@ void MainWindow::drawWidgets()
                 pipeA->settings.startY = widData.startY;
                 pipeA->settings.angle = widData.startsize;
                 ui->horizontalLayout_ProcessFlow->addWidget(pipeA);
-                pipeA->setNewPosition(global.zoomKoef);
+               // pipeA->setNewPosition(global.zoomKoef);
 
             }
                 break;

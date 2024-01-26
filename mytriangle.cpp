@@ -19,11 +19,12 @@ MyTriangle::MyTriangle(QWidget *parent): QWidget(parent) {
    // widgSize = 100;
    // size = widgSize - 3;
    // orientation = 0;
-    resize(widgSize,widgSize);        // widget izmērs
+   // resize(widgSize,widgSize);        // widget izmērs
 }
 
 void MyTriangle::paintEvent(QPaintEvent *event)
 {
+    qDebug() << "Triangle::draw" << widgSize <<points[0]<<points[1]<<points[2];
     Q_UNUSED (event);
   //  qDebug() << "MyTriangle::paintEvent";
     QPainter painter(this);
