@@ -1,12 +1,12 @@
 #include "pump.h"
-#include "widgetservice.h"
-#include <QPainter>
-#include<QMouseEvent>
-#include <QSettings>
+
+//#include <QPainter>
+//#include<QMouseEvent>
+//#include <QSettings>
 
 
-Pump::Pump(QWidget *parent)
-    : WidgetDiagramElement(parent)
+Pump::Pump(Global &global,QString name, QWidget *parent)
+    : WidgetDiagramElement(global, name,parent)
 {
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
@@ -14,11 +14,12 @@ Pump::Pump(QWidget *parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
 
-    settings.currX = settings.startX;
-    settings.currY = settings.startY;
-    settings.currSize = settings.startSize;
-}
+    settings.startX = global.widData[settings.name].startX;
+    settings.startY = global.widData[settings.name].startY;
+    settings.startSize = global.widData[settings.name].startSize;
 
+}
+/*
 void Pump::setNewPosition(float koef)
 {
     settings.currX = int(settings.startX /koef);
@@ -28,16 +29,17 @@ void Pump::setNewPosition(float koef)
     move(settings.currX,settings.currY);
     resize(settings.currSize,settings.currSize);
 }
-
+*/
 void Pump::updateSettings()
 {
 
-    //qDebug() << "Pump updateSettings" << settings.rotate;
-    //settings.currX = settings.startX/Global::zoomKoef;
-    // settings.currY = settings.startY/Global::zoomKoef;
-    ///settings.radius = settings.startSize/Global::zoomKoef;
+    qDebug() << "Pump updateSettings" << settings.options;
+    settings.startX = global.widData[settings.name].startX;
+    settings.startY = global.widData[settings.name].startY;
+    settings.startSize = global.widData[settings.name].startSize;
 
     move(settings.currX,settings.currY);
+    resize(settings.currSize,settings.currSize);
 
     if(settings.value == 0){        // 0 stop, 1 ->, 2<-)
         killTimer(timerId);
@@ -138,7 +140,7 @@ void Pump::timerEvent(QTimerEvent *event)
     }
 
     // qDebug() << "Pump::att " << att ;
-    update();
+    //update();
 }
 /*
 void Pump::mouseMoveEvent(QMouseEvent *event)

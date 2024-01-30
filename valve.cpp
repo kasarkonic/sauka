@@ -1,13 +1,13 @@
 #include "valve.h"
-#include<QMouseEvent>
-#include <QSettings>
-#include "widgetservice.h"
-#include <QPainter>
+//#include<QMouseEvent>
+//#include <QSettings>
+
+//#include <QPainter>
 
 
 
-Valve::Valve(QWidget *parent)
-    : WidgetDiagramElement(parent)
+Valve::Valve(Global &global, QString name, QWidget *parent)
+   : WidgetDiagramElement(global,name,parent)
 
 {
 
@@ -16,11 +16,9 @@ Valve::Valve(QWidget *parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
 
-    settings.currX = settings.startX;
-    settings.currY = settings.startY;
-    settings.currSize = settings.startSize;
-    qDebug() << "Valve::Valve" << settings.currX << settings.currY << settings.currSize;
-
+    settings.startX = global.widData[settings.name].startX;
+    settings.startY = global.widData[settings.name].startY;
+    settings.startSize = global.widData[settings.name].startSize;
     timerId = startTimer(100, Qt::CoarseTimer);
 }
 
@@ -40,7 +38,7 @@ void Valve::updateWidget()
 {
 
 }
-
+/*
 void Valve::setNewPosition(float koef)
 {
     settings.currX = int(settings.startX /koef);
@@ -52,7 +50,7 @@ void Valve::setNewPosition(float koef)
     resize(settings.currSize,settings.currSize);
 }
 
-
+*/
 void Valve::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
@@ -88,7 +86,7 @@ void Valve::timerEvent(QTimerEvent *event){
     Q_UNUSED (event);
     settings.options -= 5;
     att +=1;
-    qDebug()<< "att" << att << settings.status;
+   // qDebug()<< "att" << att << settings.status;
     if (att > 100)
     {
         att = 0;

@@ -2,16 +2,17 @@
 #include "ui_widgetservice.h"
 #include<QMouseEvent>
 #include <QSettings>
-#include "pipe.h"
-#include "widgetdiagramelement.h"
+//#include "widgetdiagramelement.h"
 
 
 
-WidgetService::WidgetService(WidgetDiagramElement::widDataStruct &wsettings ,  QWidget *parent)
-//WidgetService::WidgetService(WidgetDiagramElement &wsettings, QWidget *parent)
-    : wsettings(wsettings)
-    , QWidget(parent)
+//WidgetService::WidgetService(WidgetDiagramElement::widDataStruct &wsettings ,  QWidget *parent)
+WidgetService::WidgetService(WidgetDiagramElement *widgetElement, QWidget *parent)
+    //: wsettings(wsettings)
+
+    : QWidget(parent)
     , ui(new Ui::WidgetService)
+    , widgetElement(widgetElement)
 {
    // pipe = qobject_cast<Pipe*>(obj);
   //  qDebug() << "??? Name = " << valve->settings.name ;
@@ -52,11 +53,11 @@ void WidgetService::updateUIvalue()
 void WidgetService::updateFormData()
 {
 
-    ui->labelWtype->setText("Widget type: "+QString::number(wsettings.type));
-    ui->labelWname->setText(wsettings.name);
-    ui->lineEdit_Xpos->setText(QString::number(wsettings.startX));
-    ui->lineEdit_Ypos->setText(QString::number(wsettings.startY));
-    ui->lineEdit_startSize->setText(QString::number(wsettings.startSize));
+    ui->labelWtype->setText("Widget type: "+QString::number(widgetElement->settings.type));
+    ui->labelWname->setText(widgetElement->settings.name);
+    ui->lineEdit_Xpos->setText(QString::number(widgetElement->settings.startX));
+    ui->lineEdit_Ypos->setText(QString::number(widgetElement->settings.startY));
+    ui->lineEdit_startSize->setText(QString::number(widgetElement->settings.startSize));
 
 }
 
@@ -81,8 +82,8 @@ void WidgetService::mouseMoveEvent(QMouseEvent *event)
     int pointX = pos.x();
     int pointY = pos.y();
 
-    wsettings.startX = pointX;
-    wsettings.startY = pointY;
+    widgetElement->settings.startX = pointX;
+    widgetElement->settings.startY = pointY;
     updateFormData();
 
 
@@ -100,7 +101,7 @@ void WidgetService::mouseDoubleClickEvent(QMouseEvent *event)
 
 void WidgetService::on_pushButton_Xplus_clicked()
 {
-    wsettings.startX +=1;
+    widgetElement->settings.startX +=1;
     updateSettings();
     updateFormData();
 }
@@ -108,34 +109,34 @@ void WidgetService::on_pushButton_Xplus_clicked()
 
 void WidgetService::on_pushButton_Xminus_clicked()
 {
-    if(wsettings.startX > 1)
-        wsettings.startX -=1;
+    if(widgetElement->settings.startX > 1)
+        widgetElement->settings.startX -=1;
 
 }
 
 
 void WidgetService::on_pushButton_Yplus_clicked()
 {
-   wsettings.startY +=1;
+   widgetElement->settings.startY +=1;
 }
 
 
 void WidgetService::on_pushButton_Yminus_clicked()
 {
-    if(wsettings.startY > 1)
-        wsettings.startY -=1;
+    if(widgetElement->settings.startY > 1)
+        widgetElement->settings.startY -=1;
 }
 
 
 void WidgetService::on_pushButton_sizeplus_clicked()
 {
-     wsettings.startSize +=1;
+     widgetElement->settings.startSize +=1;
 }
 
 
 void WidgetService::on_pushButton_sizeMinus_clicked()
 {
-    if(wsettings.startSize > 1)
-        wsettings.startSize -=1;
+    if(widgetElement->settings.startSize > 1)
+        widgetElement->settings.startSize -=1;
 }
 

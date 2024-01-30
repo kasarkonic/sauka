@@ -1,17 +1,18 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "valve.h"
-#include "pipe.h"
-#include "pump.h"
-#include "dyno.h"
-#include "tvertne.h"
-#include "mix.h"
+
 #include <QSettings>
 #include <QMainWindow>
 #include <QStringList>
+#include "dyno.h"
+#include "mix.h"
+#include "pipe.h"
+#include "pump.h"
+#include "tvertne.h"
 #include "global.h"
-#include "widgetdata.h"
+#include "valve.h"
+
 
 
 
@@ -26,6 +27,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(Global &global, QWidget *parent = nullptr);
     ~MainWindow();
+
+    Global &global;
 
 private slots:
 
@@ -44,37 +47,25 @@ protected:
 
 private:
 
-    Global &global;
+    //Global &global;
 
     Ui::MainWindow *ui;
 
-    WidgetData widgetData;
-
-    Valve valve;
-    Valve valve1;
-
-    Pipe pipe;
-    Pipe pipe1;
-    Pipe pipe2;
-    Pipe pipe3;
-    Pipe pipe4;
-    Pipe pipe5;
+    // WidgetData widgetData;
 
 
-    Pump pump;
-    Pump pump1;
-
-    Dyno dyno;
-    Tvertne tvertne;
-    Tvertne tvertne1;
-
-    Mix mix;
+    Dyno *dynoA;
+    Mix *mixA;
+    Tvertne *tvertneA;
+    Pump *pumpA;
+    Pipe *pipeA;
+    Valve *valveA;
 
     int valveStyleAngle;
     int minWidgSize;
     int valveStatus;
-    int areaY;
-    int areaX;
+    //int areaY;
+    //int areaX;
 
     void openServiceFormValve();
     void openServiceFormPump();
@@ -83,8 +74,7 @@ private:
     void loadSettings();
     void saveSettings();
     QString settingsFile;
-    void setShow1();
-    void setShow2();
+
     void resizeAllKoef(float koef);
     void updateSettingForAll();
     void initUI();

@@ -4,7 +4,7 @@
 #include <QWidget>
 
 //#include"global.h"
-#include "pipe.h"
+
 #include "widgetDiagramElement.h"
 #include <QMainWindow>
 
@@ -19,8 +19,8 @@ class WidgetService :  public  QWidget
     Q_OBJECT
 
 public:
-    explicit WidgetService(WidgetDiagramElement::widDataStruct &wsettings, QWidget *parent = nullptr);
-  //  explicit WidgetService(WidgetDiagramElement &wsettings, QWidget *parent = nullptr);
+   // explicit WidgetService(WidgetDiagramElement::widDataStruct &wsettings, QWidget *parent = nullptr);
+    explicit WidgetService(WidgetDiagramElement *widgetElement, QWidget *parent = nullptr);
 
     ~WidgetService();
     void openWidgetServiceForm();
@@ -45,12 +45,12 @@ private slots:
     void on_pushButton_sizeMinus_clicked();
 
 private:
-   WidgetDiagramElement::widDataStruct &wsettings;
-   //WidgetDiagramElement &wsettings;
+  // WidgetDiagramElement::widDataStruct &wsettings;
+   WidgetDiagramElement *widgetElement;
     // Global &global;
     QObject obj;
     //Ui::WidgetService *ui;
-    Pipe pipe;
+   // Pipe pipe;
 
     void updateUIvalue();
     int mouseStartPointX;

@@ -1,11 +1,8 @@
 #include "tvertne.h"
-#include <QPainter>
-#include<QMouseEvent>
-#include <QPixmap>
-#include "widgetservice.h"
 
-Tvertne::Tvertne(QWidget *parent)
-    : WidgetDiagramElement(parent)
+
+Tvertne::Tvertne(Global &global, QString name, QWidget *parent)
+    : WidgetDiagramElement(global,name,parent)
 {
     QPalette pal = QPalette();
     //pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
@@ -13,14 +10,16 @@ Tvertne::Tvertne(QWidget *parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
 
-    settings.currX = settings.startX;
-    settings.currY = settings.startY;
-    settings.currSize = settings.startSize;
-
+    settings.startX = global.widData[settings.name].startX;
+    settings.startY = global.widData[settings.name].startY;
+    settings.startSize = global.widData[settings.name].startSize;
+ qDebug() << "TVERTNE SETT"<<settings.name <<settings.currX << settings.currY << settings.currSize ;
 }
 
 void Tvertne::updateSettings()
 {
+    qDebug() << "Tvertne::updateSettings()";
+
     settings.currX = settings.startX;
     settings.currY = settings.startY;
     settings.currSize = settings.startSize;
@@ -30,7 +29,7 @@ void Tvertne::updateSettings()
     //update();
 
 }
-
+/*
 void Tvertne::setNewPosition(float koef)
 {
     settings.currX = int(settings.startX /koef);
@@ -41,12 +40,13 @@ void Tvertne::setNewPosition(float koef)
     resize(settings.currSize,settings.currSize);
 }
 
-
+*/
 void Tvertne::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
 
-   // qDebug() << "Tvertne::paintEvent";
+    qDebug() << "Tvertne paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
+
     QPainter painter(this);
     QPen pen;
     pen.setWidth(4);    //draw pipe
@@ -61,19 +61,7 @@ void Tvertne::paintEvent(QPaintEvent *event)
     points[2] = QPoint(settings.currSize + settings.currX,settings.currSize + settings.currY);
     points[3] = QPoint(0 + settings.currX,settings.currSize + settings.currY);
 
-    //points[0] = QPoint(100,100);
-    //points[1] = QPoint(100,100);
-   // points[2] = QPoint(100,100);
-   // points[3] = QPoint(100,100);
-
     painter.drawPolygon(points,4);
-
-
-   // QImage img(":/pictures/fxup.png");
-   // QImage img2 = img.scaled(100, 100, Qt::KeepAspectRatio);
-
-
-
 
     imgBackground= new QImage();
     imgBackground->load(":/pictures/fxup.png");
@@ -82,7 +70,7 @@ void Tvertne::paintEvent(QPaintEvent *event)
     painter.drawImage(QPoint(), *imgBackground);
 
     resize(settings.currSize,settings.currSize);
-    move(settings.startX,settings.startY);
+    move(settings.currX,settings.currY);
 }
 
 /*

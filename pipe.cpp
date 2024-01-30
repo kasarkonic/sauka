@@ -1,26 +1,29 @@
 #include "pipe.h"
-#include "widgetservice.h"
-#include <QPainter>
-#include <QtMath>
-#include<QMouseEvent>
-#include <QSettings>
 
-Pipe::Pipe(QWidget *parent)
-    : WidgetDiagramElement(parent)
+//#include <QPainter>
+//#include <QtMath>
+//#include<QMouseEvent>
+//#include <QSettings>
+
+Pipe::Pipe(Global &global,QString name, QWidget *parent)
+    : WidgetDiagramElement(global,name, parent)
 
 {
+    qDebug() << "Pipe::Pipe";
+    QPalette pal = QPalette();
+    pal.setColor(QPalette::Window, Qt::lightGray);
+    this->setAutoFillBackground(true);
+    this->setPalette(pal);
 
+    settings.startX = global.widData[settings.name].startX;
+    settings.startY = global.widData[settings.name].startY;
+    settings.startSize = global.widData[settings.name].startSize;
+    settings.startSizeWi = global.widData[settings.name].startSizeWi;
+    settings.options = global.widData[settings.name].options;
+    angle = settings.options;
 
-   // QPalette pal = QPalette();
-   // pal.setColor(QPalette::Window, Qt::lightGray);
-   // this->setAutoFillBackground(true);
-   // this->setPalette(pal);
-
-    settings.currX = settings.startX;
-    settings.currY = settings.startY;
-    currHi = settings.startSize;        //Hi
-    currWi = settings.startSizeWi;
-
+    settings.currSize = settings.startSize;        //Hi
+    settings.currSizeWi = settings.startSizeWi;
 
 }
 
@@ -33,26 +36,26 @@ void Pipe::get(int *pnt)
 
 void Pipe::setNewPosition(float koef)
 {
-    settings.currX = int(settings.startX /koef);
-    settings.currY = int(settings.startY / koef);
+    WidgetDiagramElement::setNewPosition(koef); // call base class
+    settings.currSize = int(settings.startSize /koef);        //Hi
+    settings.currSizeWi = int(settings.startSizeWi /koef);
+    //currHi = settings.currSize;        //Hi
+   // currWi = settings.currSizeWi;
 
-    currHi = int(settings.startSize /koef);        //Hi
-    currWi = int(settings.startSizeWi /koef);
-    move(settings.currX,settings.currY);
- //   qDebug() << "koef"<< koef<< settings.startX<< settings.startY <<settings.starwi<< settings.starhi;
-   // update();
 
+ //   qDebug() << "Pipe::setNewPosition";
 }
 
 void Pipe::updateSettings()
 {
+        qDebug() << "Pipe updateSettings" << settings.options;
    // settings.wi = settings.starwi;
    // settings.hi = settings.starhi;
 
     //settings.currX = settings.startX;
     //settings.currY = settings.startY;
 
-    move(settings.startX,settings.startY);
+   // move(settings.startX,settings.startY);
 
    // if(settings.flow == 0){        // 0 stop, 1 ->, 2<-)
    //     killTimer(timerId);
@@ -114,9 +117,7 @@ void Pipe::saveSettings()
 void Pipe::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
-
-  // qDebug() << "Pipe::paintEvent";
-
+    qDebug() << "Pipe::paintEvent" << settings.currX << settings.currY;
     QPainter painter(this);
     QPen pen;
     pen.setWidth(2);    //draw pipe
@@ -131,15 +132,18 @@ void Pipe::paintEvent(QPaintEvent *event)
 
     // arrow points
 
-    int stX = settings.currX;
-    int stY = settings.currY;
-    int wi = currWi;
-    int hi = currHi;
+    int stX ;
+    int stY ;
+
+    int hi = settings.currSize;        //Hi
+    int wi = settings.currSizeWi;
+
 
     float an = settings.options * M_PI /180;
 
     int diog = sqrt(wi*wi + hi*hi);
     float diogAngle = atan((double)wi/hi);
+
 
     if (settings.options >= 0 && settings.options <= 90){
         stY = wi * sin(an);
@@ -218,8 +222,11 @@ void Pipe::paintEvent(QPaintEvent *event)
         painter.drawLines(arrowPoints,2);
     }
 
-    resize(settings.startSize,settings.currSizeWi);
-    move(settings.startX,settings.startY);
+
+//painter.drawText(10,10,"hello");
+
+    resize(settings.currSize,settings.currSize);
+    move(settings.currX,settings.currY);
     //painter.drawText(10,10,"hello");
 
 }
@@ -230,8 +237,8 @@ void Pipe::timerEvent(QTimerEvent *event){
     //qDebug() << "timerEvent" << att;
 
     att = att + step;
-    if (att > currHi - arrTop)
-        att = 0;
+  //  if (att > currHi - arrTop)
+  //      att = 0;
 
 // qDebug() << "Pipe::att "<< att ;
 }

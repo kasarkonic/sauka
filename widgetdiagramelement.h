@@ -2,15 +2,19 @@
 #define WIDGETDIAGRAMELEMENT_H
 
 #include <QWidget>
+#include"global.h"
+#include<QMouseEvent>
 
+#include <QPainter>
+#include <QPixmap>
 
 class WidgetDiagramElement : public QWidget
 {
     Q_OBJECT
 public:
-    explicit WidgetDiagramElement( QWidget *parent = nullptr);
+    explicit WidgetDiagramElement( Global &global,QString name, QWidget *parent = nullptr);
 
-    void setNewPosition(float koef);
+
 
 
     struct  widDataStruct{
@@ -44,10 +48,16 @@ protected:
     //void    mouseMoveEvent (QMouseEvent *event) override;
     void    mouseDoubleClickEvent(QMouseEvent *event) override;
     void    timerEvent(QTimerEvent *event) override;
+    void    resizeEvent(QResizeEvent* event) override ;
+    Global &global;
+    void setNewPosition(float koef);
+
+
 private:
 
     int timerId = 0;
     int att = 100;
+    QString widName;
 
 };
 

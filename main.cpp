@@ -6,6 +6,7 @@
 int main(int argc, char *argv[])
 {
     Global global;
+
     QApplication a(argc, argv);
     MainWindow w (global);
     //w.resize(750, 750);

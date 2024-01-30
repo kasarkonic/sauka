@@ -1,11 +1,9 @@
 #include "mix.h"
-#include <QPainter>
-#include<QMouseEvent>
-#include <QPixmap>
-#include "widgetservice.h"
 
-Mix::Mix(QWidget *parent)
-    : WidgetDiagramElement(parent)
+
+
+Mix::Mix(Global &global, QString name, QWidget *parent)
+    : WidgetDiagramElement(global,name,parent)
 
 
 {
@@ -14,40 +12,36 @@ Mix::Mix(QWidget *parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
 
-    settings.currX = settings.startX;
-    settings.currY = settings.startY;
-    settings.currSize = settings.startSize;
-
+    settings.startX = global.widData[settings.name].startX;
+    settings.startY = global.widData[settings.name].startY;
+    settings.startSize = global.widData[settings.name].startSize;
 }
 
 void Mix::updateSettings()
 {
-    settings.currX = settings.startX;
-    settings.currY = settings.startY;
-    settings.currSize = settings.startSize;
-    move(settings.startX,settings.startY);
-
-    resize( settings.currSize, settings.currSize);
-   // update();
-
-}
-
-void Mix::setNewPosition(float koef)
-{
-    settings.currX = int(settings.startX /koef);
-    settings.currY = int(settings.startY / koef);
-    settings.currSize = int (settings.startSize/koef);
+    settings.startX = global.widData[settings.name].startX;
+    settings.startY = global.widData[settings.name].startY;
+    settings.startSize = global.widData[settings.name].startSize;
 
     move(settings.currX,settings.currY);
     resize(settings.currSize,settings.currSize);
+
+}
+/*
+void Mix::setNewPosition(float koef)
+{ 
+    settings.currX = int((float)settings.startX /koef);
+    settings.currY = int((float)settings.startY / koef);
+    settings.currSize = int ((float)settings.startSize/koef);
 }
 
-
+*/
 void Mix::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
 
-  //  qDebug() << "Mix::paintEvent";
+    qDebug() << "MIX paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
+
     QPainter painter(this);
     QPen pen;
     pen.setWidth(4);    //draw pipe
@@ -77,7 +71,7 @@ void Mix::paintEvent(QPaintEvent *event)
     painter.drawImage(QPoint(), *imgBackground);
 
     resize(settings.currSize,settings.currSize);
-    move(settings.startX,settings.startY);
+    move(settings.currX,settings.currY);
 }
 
 /*
