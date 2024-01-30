@@ -15,20 +15,21 @@ Tvertne::Tvertne(Global &global, QString name, QWidget *parent)
     settings.startSize = global.widData[settings.name].startSize;
  qDebug() << "TVERTNE SETT"<<settings.name <<settings.currX << settings.currY << settings.currSize ;
 }
-
+/*
 void Tvertne::updateSettings()
 {
     qDebug() << "Tvertne::updateSettings()";
 
-    settings.currX = settings.startX;
-    settings.currY = settings.startY;
-    settings.currSize = settings.startSize;
-    move(settings.startX,settings.startY);
+    settings.startX = global.widData[settings.name].startX;
+    settings.startY = global.widData[settings.name].startY;
+    settings.startSize = global.widData[settings.name].startSize;
 
-    resize( settings.currSize, settings.currSize);
+    move(settings.currX,settings.currY);
+    resize(settings.currSize,settings.currSize);
     //update();
 
 }
+*/
 /*
 void Tvertne::setNewPosition(float koef)
 {
@@ -69,8 +70,8 @@ void Tvertne::paintEvent(QPaintEvent *event)
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 
-    resize(settings.currSize,settings.currSize);
-    move(settings.currX,settings.currY);
+  //  resize(settings.currSize,settings.currSize);
+  //  move(settings.currX,settings.currY);
 }
 
 /*

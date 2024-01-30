@@ -19,9 +19,14 @@ Valve::Valve(Global &global, QString name, QWidget *parent)
     settings.startX = global.widData[settings.name].startX;
     settings.startY = global.widData[settings.name].startY;
     settings.startSize = global.widData[settings.name].startSize;
-    timerId = startTimer(100, Qt::CoarseTimer);
+  //  timerId = startTimer(100, Qt::CoarseTimer);
 }
+/*
+void Valve::updateSettings()
+{
 
+}
+*/
 void Valve::calcPoints(int angle)
 {
     float an = M_PI/180 * (35 + angle);
@@ -36,7 +41,8 @@ void Valve::calcPoints(int angle)
 
 void Valve::updateWidget()
 {
-
+    move(settings.currX,settings.currY);
+    resize(settings.currSize,settings.currSize);
 }
 /*
 void Valve::setNewPosition(float koef)
@@ -56,6 +62,7 @@ void Valve::paintEvent(QPaintEvent *event)
     Q_UNUSED (event);
 
     //qDebug() << "Valve::paintEvent";
+    qDebug() << "Valve paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
     calcPoints(settings.options);
 
@@ -77,8 +84,8 @@ void Valve::paintEvent(QPaintEvent *event)
     painter.setPen(pen);
     painter.drawPolygon(points,4,Qt::WindingFill);
 
-    resize(settings.currSize,settings.currSize);
-    move(settings.currX,settings.currY);
+  //  resize(settings.currSize,settings.currSize);
+  //  move(settings.currX,settings.currY);
 }
 
 

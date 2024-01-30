@@ -17,18 +17,19 @@ Dyno::Dyno(Global &global,QString name, QWidget *parent)
     settings.startY = global.widData[settings.name].startY;
     settings.startSize = global.widData[settings.name].startSize;
 }
-
+/*
 void Dyno::updateSettings()
 {
-    qDebug() << "Dyno::updateSettings()";
-    settings.startX = global.widData[settings.name].startX;
-    settings.startY = global.widData[settings.name].startY;
-    settings.startSize = global.widData[settings.name].startSize;
+    float koef = global.zoomKoef;
+    qDebug() << "Dyno::updateSettings()"<<koef <<global.widData[settings.name].startX << global.widData[settings.name].startY ;
+    settings.currX = global.widData[settings.name].startX/koef;
+    settings.currY = global.widData[settings.name].startY/koef;
+    settings.currSize = global.widData[settings.name].startSize/koef;
 
     move(settings.currX,settings.currY);
     resize(settings.currSize,settings.currSize);
-
 }
+*/
 /*
 void Dyno::setNewPosition(float koef )
 {
@@ -68,8 +69,8 @@ qDebug() << "DYNO paintEvent"<<settings.name <<settings.currX << settings.currY 
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 
-    resize(settings.currSize,settings.currSize);
-    move(settings.currX,settings.currY);
+ //   resize(settings.currSize,settings.currSize);
+ //   move(settings.currX,settings.currY);
 
 }
 

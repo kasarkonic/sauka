@@ -20,6 +20,19 @@ void WidgetDiagramElement::setNewPosition(float koef)
     settings.currSize = int ((float)settings.startSize/koef);
     //qDebug() << "WidgetDiagramElement 2::setNewPosition()" <<settings.name << global.zoomKoef<<settings.startX<<settings.startY<<
     //    settings.currX<<settings.currY  ;
+    updateSettings();
+}
+
+void WidgetDiagramElement::updateSettings()
+{
+    float koef = global.zoomKoef;
+    //qDebug() << "Dyno::updateSettings()"<<koef <<global.widData[settings.name].startX << global.widData[settings.name].startY ;
+    settings.currX = global.widData[settings.name].startX/koef;
+    settings.currY = global.widData[settings.name].startY/koef;
+    settings.currSize = global.widData[settings.name].startSize/koef;
+
+    move(settings.currX,settings.currY);
+    resize(settings.currSize,settings.currSize);
 }
 
 void WidgetDiagramElement::mouseDoubleClickEvent(QMouseEvent *event)

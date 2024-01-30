@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>367</width>
-    <height>375</height>
+    <width>438</width>
+    <height>472</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -233,6 +233,34 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_sizeMinus">
+         <property name="text">
+          <string>-</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="5,2,2,2">
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Options</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_options"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_OptionsPlus">
+         <property name="text">
+          <string>+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_OptionsMinus">
          <property name="text">
           <string>-</string>
          </property>

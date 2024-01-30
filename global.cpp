@@ -82,7 +82,7 @@ void Global::creatWidgList()
     // type                      name         startX      startY  startSize  startSizeWi  options
 
     addWidgList(WidgetType::Mix,        "Mix",    100,        100,    50, 0,  0);
-    addWidgList(WidgetType::Dyno,       "Dyno",   200,         200,   51, 0,  0);
+    addWidgList(WidgetType::Dyno,       "Dyno",   202,         203,   51, 0,  0);
     addWidgList(WidgetType::Tvertne,     "Tvertne 1",  300,     300,   50, 0,  0);
     addWidgList(WidgetType::Pump,       "Pump 1",  100,        300,    50, 0,  0);
 

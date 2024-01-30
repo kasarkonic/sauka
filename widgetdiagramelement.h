@@ -13,8 +13,8 @@ class WidgetDiagramElement : public QWidget
     Q_OBJECT
 public:
     explicit WidgetDiagramElement( Global &global,QString name, QWidget *parent = nullptr);
-
-
+    Global &global;
+    virtual void updateSettings();
 
 
     struct  widDataStruct{
@@ -49,9 +49,9 @@ protected:
     void    mouseDoubleClickEvent(QMouseEvent *event) override;
     void    timerEvent(QTimerEvent *event) override;
     void    resizeEvent(QResizeEvent* event) override ;
-    Global &global;
+   // Global &global;
     void setNewPosition(float koef);
-
+   //virtual void updateSettings();
 
 private:
 

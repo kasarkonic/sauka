@@ -45,7 +45,7 @@ void Pipe::setNewPosition(float koef)
 
  //   qDebug() << "Pipe::setNewPosition";
 }
-
+/*
 void Pipe::updateSettings()
 {
         qDebug() << "Pipe updateSettings" << settings.options;
@@ -65,7 +65,7 @@ void Pipe::updateSettings()
    // }
 }
 
-
+*/
 /*
 void Pipe::loadSettings()
 {
@@ -225,8 +225,8 @@ void Pipe::paintEvent(QPaintEvent *event)
 
 //painter.drawText(10,10,"hello");
 
-    resize(settings.currSize,settings.currSize);
-    move(settings.currX,settings.currY);
+//    resize(settings.currSize,settings.currSize);
+//    move(settings.currX,settings.currY);
     //painter.drawText(10,10,"hello");
 
 }
@@ -240,7 +240,7 @@ void Pipe::timerEvent(QTimerEvent *event){
   //  if (att > currHi - arrTop)
   //      att = 0;
 
-// qDebug() << "Pipe::att "<< att ;
+ qDebug() << "Pipe::att "<< att ;
 }
 /*
 void Pipe::mousePressEvent(QMouseEvent *event){

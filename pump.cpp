@@ -30,6 +30,7 @@ void Pump::setNewPosition(float koef)
     resize(settings.currSize,settings.currSize);
 }
 */
+/*
 void Pump::updateSettings()
 {
 
@@ -49,6 +50,7 @@ void Pump::updateSettings()
     }
 
 }
+*/
 /*
 void Pump::loadSettings()
 {
@@ -97,7 +99,7 @@ void Pump::paintEvent(QPaintEvent *event)
 {
 
     Q_UNUSED (event);
-    //qDebug() << "Pump::paintEvent" << settings.currX << settings.currY << settings.currSize;
+    qDebug() << "Pump::paintEvent" << settings.currX << settings.currY << settings.currSize;
     QPainter painter(this);
     QPen pen;
     pen.setWidth(4);    //draw pipe
@@ -122,8 +124,8 @@ void Pump::paintEvent(QPaintEvent *event)
     painter.setPen(pen);
     painter.drawPolygon(points,3);
 
-    resize(settings.currSize,settings.currSize);
-    move(settings.currX,settings.currY);
+  //  resize(settings.currSize,settings.currSize);
+  //  move(settings.currX,settings.currY);
 }
 
 void Pump::timerEvent(QTimerEvent *event)

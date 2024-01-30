@@ -9,7 +9,7 @@ class Mix : public WidgetDiagramElement
     Q_OBJECT
 public:
     Mix(Global &global,QString name, QWidget *parent = nullptr);
-    void updateSettings();
+   // void updateSettings() override;
 
     // widDataStruct settings;
 

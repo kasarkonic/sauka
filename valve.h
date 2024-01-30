@@ -31,12 +31,12 @@ public:
     // void saveSettings();
     // void loadSettings();
 
-   // void setStartParam(QPoint dimA, QPoint dimC,QPoint pos);
+    // void setStartParam(QPoint dimA, QPoint dimC,QPoint pos);
 
 
 
     void setNewPosition(float koef);
-    void updateSettings();
+   // void updateSettings() override;
 
 signals:
     // void openServiceValve();
@@ -44,7 +44,7 @@ signals:
 protected:
     void    paintEvent(QPaintEvent *event) override;
     void    timerEvent(QTimerEvent *event) override;
-    void updateWidget();
+    void    updateWidget();
 
 private:
     int angle;
@@ -55,7 +55,7 @@ private:
 
     QPoint points[4];
     void calcPoints(int angle);
-   // QColor color = Qt::yellow;;
+    // QColor color = Qt::yellow;;
 
 };
 

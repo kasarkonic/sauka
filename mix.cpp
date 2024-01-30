@@ -16,7 +16,7 @@ Mix::Mix(Global &global, QString name, QWidget *parent)
     settings.startY = global.widData[settings.name].startY;
     settings.startSize = global.widData[settings.name].startSize;
 }
-
+/*
 void Mix::updateSettings()
 {
     settings.startX = global.widData[settings.name].startX;
@@ -25,8 +25,8 @@ void Mix::updateSettings()
 
     move(settings.currX,settings.currY);
     resize(settings.currSize,settings.currSize);
-
 }
+*/
 /*
 void Mix::setNewPosition(float koef)
 { 
@@ -56,13 +56,7 @@ void Mix::paintEvent(QPaintEvent *event)
     points[2] = QPoint(settings.currSize + settings.currX,settings.currSize + settings.currY);
     points[3] = QPoint(0 + settings.currX,settings.currSize + settings.currY);
 
-    //points[0] = QPoint(100,100);
-    //points[1] = QPoint(100,100);
-   // points[2] = QPoint(100,100);
-   // points[3] = QPoint(100,100);
-
     painter.drawPolygon(points,4);
-
 
     imgBackground= new QImage();
     imgBackground->load(":/pictures/mixeris3.png");
@@ -70,8 +64,8 @@ void Mix::paintEvent(QPaintEvent *event)
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 
-    resize(settings.currSize,settings.currSize);
-    move(settings.currX,settings.currY);
+  //  resize(settings.currSize,settings.currSize);
+  //  move(settings.currX,settings.currY);
 }
 
 /*

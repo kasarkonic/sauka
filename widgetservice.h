@@ -44,6 +44,18 @@ private slots:
 
     void on_pushButton_sizeMinus_clicked();
 
+    void on_pushButton_OptionsMinus_clicked();
+
+    void on_pushButton_OptionsPlus_clicked();
+
+    void on_lineEdit_Xpos_editingFinished();
+
+    void on_lineEdit_Ypos_editingFinished();
+
+    void on_lineEdit_startSize_editingFinished();
+
+    void on_lineEdit_options_editingFinished();
+
 private:
   // WidgetDiagramElement::widDataStruct &wsettings;
    WidgetDiagramElement *widgetElement;
@@ -57,6 +69,7 @@ private:
     int mouseStartPointY;
     //void updateSettings();
     void updateFormData();
+    QString currentWid;
 
 };
 

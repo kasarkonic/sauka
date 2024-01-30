@@ -24,8 +24,7 @@ protected:
 //    void    mouseMoveEvent (QMouseEvent *event) override;
 //    void    mouseDoubleClickEvent(QMouseEvent *event) override;
    // void setNewPosition(float koef) ;
-    void updateSettings() ;
-private:
+   // void updateSettings() override;
 
     int att = 360;
     int timerId = 0;
