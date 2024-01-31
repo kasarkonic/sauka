@@ -19,15 +19,16 @@ class WidgetService :  public  QWidget
     Q_OBJECT
 
 public:
-   // explicit WidgetService(WidgetDiagramElement::widDataStruct &wsettings, QWidget *parent = nullptr);
+        // explicit WidgetService(WidgetDiagramElement::widDataStruct &wsettings, QWidget *parent = nullptr);
     explicit WidgetService(WidgetDiagramElement *widgetElement, QWidget *parent = nullptr);
 
     ~WidgetService();
     void openWidgetServiceForm();
-     Ui::WidgetService *ui;
-     void updateSettings();
+    Ui::WidgetService *ui;
+    void updateSettings();
 
 protected:
+    void    closeEvent (QCloseEvent *event);
     void    mousePressEvent(QMouseEvent *event) override;
     void    mouseMoveEvent (QMouseEvent *event) override;
     void    mouseDoubleClickEvent(QMouseEvent *event) override;
@@ -57,12 +58,12 @@ private slots:
     void on_lineEdit_options_editingFinished();
 
 private:
-  // WidgetDiagramElement::widDataStruct &wsettings;
-   WidgetDiagramElement *widgetElement;
+         // WidgetDiagramElement::widDataStruct &wsettings;
+    WidgetDiagramElement *widgetElement;
     // Global &global;
     QObject obj;
     //Ui::WidgetService *ui;
-   // Pipe pipe;
+    // Pipe pipe;
 
     void updateUIvalue();
     int mouseStartPointX;

@@ -9,19 +9,19 @@ Pipe::Pipe(Global &global,QString name, QWidget *parent)
     : WidgetDiagramElement(global,name, parent)
 
 {
+    /*
     qDebug() << "Pipe::Pipe";
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::lightGray);
     this->setAutoFillBackground(true);
     this->setPalette(pal);
-
-    settings.startX = global.widData[settings.name].startX;
-    settings.startY = global.widData[settings.name].startY;
-    settings.startSize = global.widData[settings.name].startSize;
-    settings.startSizeWi = global.widData[settings.name].startSizeWi;
-    settings.options = global.widData[settings.name].options;
+*/
+    settings.startX = global.widHash[settings.name].startX;
+    settings.startY = global.widHash[settings.name].startY;
+    settings.startSize = global.widHash[settings.name].startSize;
+    settings.startSizeWi = global.widHash[settings.name].startSizeWi;
+    settings.options = global.widHash[settings.name].options;
     angle = settings.options;
-
     settings.currSize = settings.startSize;        //Hi
     settings.currSizeWi = settings.startSizeWi;
 
@@ -39,16 +39,18 @@ void Pipe::setNewPosition(float koef)
     WidgetDiagramElement::setNewPosition(koef); // call base class
     settings.currSize = int(settings.startSize /koef);        //Hi
     settings.currSizeWi = int(settings.startSizeWi /koef);
-    //currHi = settings.currSize;        //Hi
-   // currWi = settings.currSizeWi;
-
-
  //   qDebug() << "Pipe::setNewPosition";
 }
-/*
+
 void Pipe::updateSettings()
 {
         qDebug() << "Pipe updateSettings" << settings.options;
+
+    WidgetDiagramElement::updateSettings();
+
+        update();
+
+
    // settings.wi = settings.starwi;
    // settings.hi = settings.starhi;
 
@@ -65,7 +67,7 @@ void Pipe::updateSettings()
    // }
 }
 
-*/
+
 /*
 void Pipe::loadSettings()
 {
@@ -139,31 +141,36 @@ void Pipe::paintEvent(QPaintEvent *event)
     int wi = settings.currSizeWi;
 
 
+
+    settings.options %=360;
     float an = settings.options * M_PI /180;
 
-    int diog = sqrt(wi*wi + hi*hi);
-    float diogAngle = atan((double)wi/hi);
+
+
+
+   // int diog = sqrt(wi*wi + hi*hi);
+   // float diogAngle = atan((double)wi/hi);
 
 
     if (settings.options >= 0 && settings.options <= 90){
         stY = wi * sin(an);
         stX = 0;
-        resize(wi * cos(an) + hi * sin(an),hi * cos(an)  + wi * sin(an));
+       // resize(wi * cos(an) + hi * sin(an),hi * cos(an)  + wi * sin(an));
     }
     if (settings.options > 90  && settings.options <= 180){
         stX  = wi * sin(an-M_PI/2);
         stY = hi * cos(M_PI - an) + wi * cos(an - M_PI/2);
-        resize(wi * sin(an-M_PI/2) + hi * cos(an-M_PI/2),stY);
+       // resize(wi * sin(an-M_PI/2) + hi * cos(an-M_PI/2),stY);
     }
     if (settings.options > 180 && settings.options <= 270){
         stX  = hi * sin(an-M_PI) + wi * cos(an-M_PI) ;
         stY = settings.startY = hi * cos(an - M_PI)  ;
-        resize(stX ,hi * cos(an - M_PI) + wi * sin(an-M_PI));
+       // resize(stX ,hi * cos(an - M_PI) + wi * sin(an-M_PI));
     }
     if (settings.options > 270 && settings.options <= 360){
         stX  = hi * cos( an - 3*M_PI/2) ;
         stY = 0;
-        resize(stX +  wi * sin( an - 3*M_PI/2) , diog * cos( 2* M_PI - (an + diogAngle) ));
+       // resize(stX +  wi * sin( an - 3*M_PI/2) , diog * cos( 2* M_PI - (an + diogAngle) ));
     }
 
     pipePoints[0].setX(stX);        //left upper corner

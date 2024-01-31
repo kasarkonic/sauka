@@ -8,15 +8,16 @@
 Pump::Pump(Global &global,QString name, QWidget *parent)
     : WidgetDiagramElement(global, name,parent)
 {
+    /*
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
     pal.setColor(QPalette::Window, QColor(0, 0, 0, 20));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
-
-    settings.startX = global.widData[settings.name].startX;
-    settings.startY = global.widData[settings.name].startY;
-    settings.startSize = global.widData[settings.name].startSize;
+ */
+    settings.startX = global.widHash[settings.name].startX;
+    settings.startY = global.widHash[settings.name].startY;
+    settings.startSize = global.widHash[settings.name].startSize;
 
 }
 /*

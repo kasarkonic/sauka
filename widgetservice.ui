@@ -173,12 +173,24 @@
          <property name="text">
           <string>+</string>
          </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
+         </property>
+         <property name="autoRepeatInterval">
+          <number>10</number>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_Xminus">
          <property name="text">
           <string>-</string>
+         </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
+         </property>
+         <property name="autoRepeatInterval">
+          <number>10</number>
          </property>
         </widget>
        </item>
@@ -201,12 +213,24 @@
          <property name="text">
           <string>+</string>
          </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
+         </property>
+         <property name="autoRepeatInterval">
+          <number>10</number>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_Yminus">
          <property name="text">
           <string>-</string>
+         </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
+         </property>
+         <property name="autoRepeatInterval">
+          <number>10</number>
          </property>
         </widget>
        </item>
@@ -229,12 +253,24 @@
          <property name="text">
           <string>+</string>
          </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
+         </property>
+         <property name="autoRepeatInterval">
+          <number>10</number>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_sizeMinus">
          <property name="text">
           <string>-</string>
+         </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
+         </property>
+         <property name="autoRepeatInterval">
+          <number>10</number>
          </property>
         </widget>
        </item>
@@ -257,12 +293,24 @@
          <property name="text">
           <string>+</string>
          </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
+         </property>
+         <property name="autoRepeatInterval">
+          <number>10</number>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_OptionsMinus">
          <property name="text">
           <string>-</string>
+         </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
+         </property>
+         <property name="autoRepeatInterval">
+          <number>10</number>
          </property>
         </widget>
        </item>

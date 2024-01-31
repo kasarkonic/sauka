@@ -41,7 +41,7 @@ protected:
  //   void    mouseMoveEvent (QMouseEvent *event) override;
 //    void    mouseDoubleClickEvent(QMouseEvent *event) override;
  //   void setNewPosition(float koef);
- //   void updateSettings() override;
+    void updateSettings() override;
 
 
  //   QImage *imgBackground;

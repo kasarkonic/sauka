@@ -36,7 +36,7 @@ public:
 
 
     void setNewPosition(float koef);
-   // void updateSettings() override;
+    void updateSettings() override;
 
 signals:
     // void openServiceValve();

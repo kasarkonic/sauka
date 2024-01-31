@@ -41,6 +41,7 @@ public:
         int currY;
         int currSize;
         int currSizeWi;
+
     } settings;
 
 protected:
@@ -60,6 +61,8 @@ private:
     QString widName;
 
 };
+
+
 
 
 #endif // WIDGETDIAGRAMELEMENT_H

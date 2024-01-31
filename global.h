@@ -71,11 +71,13 @@ public:
         int actAdr = 0;
         int analogSensAdr = 0;
         int digitaSensAdr = 0;
+        int windowNr = 0;
+        bool formExist = false;
 
     };
     QHash<QString,act> actHash;
     QHash<QString,sens> sensHash;
-    QHash<QString,wdataStruct> widData;
+    QHash<QString,wdataStruct> widHash;
 
     QString settingsFileName;
     QString appSwVers;
@@ -99,6 +101,7 @@ private:
 
     void creatSensList();
     void addSensList(QString name, SensorType::sensT tp, int addres);
+
 
 };
 

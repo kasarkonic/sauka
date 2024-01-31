@@ -6,29 +6,16 @@
 
 
 WidgetService::WidgetService(WidgetDiagramElement *widgetElement, QWidget *parent)
-//: wsettings(wsettings)
+    //: wsettings(wsettings)
 
     : QWidget(parent)
     , ui(new Ui::WidgetService)
     , widgetElement(widgetElement)
 {
-    // pipe = qobject_cast<Pipe*>(obj);
-    //  qDebug() << "??? Name = " << valve->settings.name ;
-    ui->setupUi(this);
-    //  connect(
-    //      &pipe, &Pipe::openServicePipe,
-    //       this, &WidgetService::openWidgetServiceForm
-    //        );
-
-
-
-
     currentWid =  widgetElement->settings.name;
     qDebug() << "currentWid" << currentWid  ;
-
-
-    //QString str =  widgetElement->global.widData[currentWid].name;
-    qDebug() << "???" << widgetElement->global.widData[currentWid].startX << widgetElement->global.widData[currentWid].startY  ;
+    ui->setupUi(this);
+    qDebug() << "???" << widgetElement->global.widHash[currentWid].startX << widgetElement->global.widHash[currentWid].startY  ;
     updateFormData();
 }
 void WidgetService::openWidgetServiceForm()
@@ -50,6 +37,7 @@ void WidgetService::openWidgetServiceForm()
 
 WidgetService::~WidgetService()
 {
+     widgetElement->global.widHash[currentWid].formExist = false;
     delete ui;
 }
 
@@ -62,17 +50,22 @@ void WidgetService::updateFormData()
 {
 
     ui->labelWtype->setText("Widget type: "+QString::number(widgetElement->settings.type));
-    ui->labelWname->setText(widgetElement->global.widData[currentWid].name);
-    ui->lineEdit_Xpos->setText(QString::number(widgetElement->global.widData[currentWid].startX));
-    ui->lineEdit_Ypos->setText(QString::number(widgetElement->global.widData[currentWid].startY));
-    ui->lineEdit_startSize->setText(QString::number(widgetElement->global.widData[currentWid].startSize));
-    ui->lineEdit_options->setText(QString::number(widgetElement->global.widData[currentWid].options));
+    ui->labelWname->setText(widgetElement->global.widHash[currentWid].name);
+    ui->lineEdit_Xpos->setText(QString::number(widgetElement->global.widHash[currentWid].startX));
+    ui->lineEdit_Ypos->setText(QString::number(widgetElement->global.widHash[currentWid].startY));
+    ui->lineEdit_startSize->setText(QString::number(widgetElement->global.widHash[currentWid].startSize));
+    ui->lineEdit_options->setText(QString::number(widgetElement->global.widHash[currentWid].options));
     widgetElement->updateSettings();
 }
 
 void WidgetService::updateSettings()
 {
     qDebug() << "WidgetService::updateSettings()";
+}
+
+void WidgetService::closeEvent(QCloseEvent *event)
+{
+    widgetElement->global.widHash[currentWid].formExist = false;
 }
 void WidgetService::mousePressEvent(QMouseEvent *event)
 {
@@ -90,14 +83,10 @@ void WidgetService::mouseMoveEvent(QMouseEvent *event)
 
     int pointX = pos.x();
     int pointY = pos.y();
-
-    widgetElement->global.widData[currentWid].startX = pointX;
-    widgetElement->global.widData[currentWid].startY = pointY;
-    updateFormData();
-
-    qDebug() << " WidgetService mouseMoveEvent dx:dy" << pos.x() << pos.y();
-
-
+    qDebug() << " WidgetService mouseMoveEvent dx:dy" << pointX<< pointY;
+    widgetElement->global.widHash[currentWid].startX = pointX;
+    widgetElement->global.widHash[currentWid].startY = pointY;
+    updateFormData(); 
 }
 
 void WidgetService::mouseDoubleClickEvent(QMouseEvent *event)
@@ -108,7 +97,7 @@ void WidgetService::mouseDoubleClickEvent(QMouseEvent *event)
 
 void WidgetService::on_pushButton_Xplus_clicked()
 {
-    widgetElement->global.widData[currentWid].startX +=1;
+    widgetElement->global.widHash[currentWid].startX +=1;
     // updateSettings();
     // updateFormData();
     updateFormData();
@@ -117,53 +106,53 @@ void WidgetService::on_pushButton_Xplus_clicked()
 
 void WidgetService::on_pushButton_Xminus_clicked()
 {
-    if(widgetElement->global.widData[currentWid].startX > 1)
-        widgetElement->global.widData[currentWid].startX -=1;
+    if(widgetElement->global.widHash[currentWid].startX > 1)
+        widgetElement->global.widHash[currentWid].startX -=1;
     updateFormData();
 }
 
 
 void WidgetService::on_pushButton_Yplus_clicked()
 {
-    widgetElement->global.widData[currentWid].startY +=1;
+    widgetElement->global.widHash[currentWid].startY +=1;
     updateFormData();
 }
 
 
 void WidgetService::on_pushButton_Yminus_clicked()
 {
-    if(widgetElement->global.widData[currentWid].startY > 1)
-        widgetElement->global.widData[currentWid].startY -=1;
+    if(widgetElement->global.widHash[currentWid].startY > 1)
+        widgetElement->global.widHash[currentWid].startY -=1;
     updateFormData();
 }
 
 
 void WidgetService::on_pushButton_sizeplus_clicked()
 {
-    widgetElement->global.widData[currentWid].startSize +=1;
+    widgetElement->global.widHash[currentWid].startSize +=1;
     updateFormData();
 }
 
 
 void WidgetService::on_pushButton_sizeMinus_clicked()
 {
-    if(widgetElement->global.widData[currentWid].startSize > 1)
-        widgetElement->global.widData[currentWid].startSize -=1;
+    if(widgetElement->global.widHash[currentWid].startSize > 1)
+        widgetElement->global.widHash[currentWid].startSize -=1;
     updateFormData();
 }
 
 
 void WidgetService::on_pushButton_OptionsMinus_clicked()
 {
-    if(widgetElement->global.widData[currentWid].options > 0)
-        widgetElement->global.widData[currentWid].options -=1;
+    if(widgetElement->global.widHash[currentWid].options > 0)
+        widgetElement->global.widHash[currentWid].options -=1;
     updateFormData();
 }
 
 
 void WidgetService::on_pushButton_OptionsPlus_clicked()
 {
-    widgetElement->global.widData[currentWid].options +=1;
+    widgetElement->global.widHash[currentWid].options +=1;
     updateFormData();
 }
 
@@ -171,7 +160,7 @@ void WidgetService::on_pushButton_OptionsPlus_clicked()
 void WidgetService::on_lineEdit_Xpos_editingFinished()
 {
     int val = ui->lineEdit_Xpos->text().toInt();
-    widgetElement->global.widData[currentWid].startX = val;
+    widgetElement->global.widHash[currentWid].startX = val;
     updateFormData();
 }
 
@@ -179,7 +168,7 @@ void WidgetService::on_lineEdit_Xpos_editingFinished()
 void WidgetService::on_lineEdit_Ypos_editingFinished()
 {
     int val = ui->lineEdit_Ypos->text().toInt();
-    widgetElement->global.widData[currentWid].startY = val;
+    widgetElement->global.widHash[currentWid].startY = val;
     updateFormData();
 }
 
@@ -187,7 +176,7 @@ void WidgetService::on_lineEdit_Ypos_editingFinished()
 void WidgetService::on_lineEdit_startSize_editingFinished()
 {
     int val = ui->lineEdit_startSize->text().toInt();
-    widgetElement->global.widData[currentWid].startSize = val;
+    widgetElement->global.widHash[currentWid].startSize = val;
     updateFormData();
 }
 
@@ -195,7 +184,7 @@ void WidgetService::on_lineEdit_startSize_editingFinished()
 void WidgetService::on_lineEdit_options_editingFinished()
 {
     int val = ui->lineEdit_options->text().toInt();
-    widgetElement->global.widData[currentWid].options = val;
+    widgetElement->global.widHash[currentWid].options = val;
     updateFormData();
 }
 

@@ -277,13 +277,11 @@ void MainWindow::appendInfo(QString str, QColor col)
 
 void MainWindow::drawWidgets()
 {
-    qDebug() << "widData draw  " << global.widData.size() << "elements";
+    qDebug() << "widData draw  " << global.widHash.size() << "elements";
 
+    foreach (Global::wdataStruct widData, global.widHash){
 
-
-    foreach (Global::wdataStruct widData, global.widData){
-
-        qDebug() << "widData Draw: " << widData.type << widData.name;
+        qDebug() << "drawWidgets Draw: " << widData.type << widData.name;
         switch (widData.type) {
             case WidgetType::widgT::Dyno:
              {
