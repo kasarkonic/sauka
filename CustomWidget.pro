@@ -12,7 +12,6 @@ SOURCES += \
     arrow.cpp \
     main.cpp \
     mainwindow.cpp \
-    mytriangle.cpp \
     pipe.cpp \
     pump.cpp \
     valve.cpp
@@ -20,7 +19,6 @@ SOURCES += \
 HEADERS += \
     arrow.h \
     mainwindow.h \
-    mytriangle.h \
     pipe.h \
     pump.h \
     valve.h

@@ -1,13 +1,10 @@
 #include "dyno.h"
-#include <QPainter>
-#include<QMouseEvent>
-#include <QPixmap>
-#include <QFile>
-#include "widgetservice.h"
 
-Dyno::Dyno(QWidget *parent)
-    : WidgetDiagramElement(parent)
 
+
+
+Dyno::Dyno(Global &global,QString name, QWidget *parent)
+    : WidgetDiagramElement(global, name, parent)
 
 {
     QPalette pal = QPalette();
@@ -16,39 +13,39 @@ Dyno::Dyno(QWidget *parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
 
-    settings.currX = settings.startX;
-    settings.currY = settings.startY;
-    settings.currSize = settings.startSize;
-
+    settings.startX = global.widData[settings.name].startX;
+    settings.startY = global.widData[settings.name].startY;
+    settings.startSize = global.widData[settings.name].startSize;
 }
-
+/*
 void Dyno::updateSettings()
 {
-    settings.currX = settings.startX;
-    settings.currY = settings.startY;
-    settings.currSize = settings.startSize;
-    move(settings.startX,settings.startY);
-
-    resize( settings.currSize, settings.currSize);
-    //   update();
-
-}
-
-void Dyno::setNewPosition(float koef)
-{
-    settings.currX = int(settings.startX /koef);
-    settings.currY = int(settings.startY / koef);
-    settings.currSize = int (settings.startSize/koef);
+    float koef = global.zoomKoef;
+    qDebug() << "Dyno::updateSettings()"<<koef <<global.widData[settings.name].startX << global.widData[settings.name].startY ;
+    settings.currX = global.widData[settings.name].startX/koef;
+    settings.currY = global.widData[settings.name].startY/koef;
+    settings.currSize = global.widData[settings.name].startSize/koef;
 
     move(settings.currX,settings.currY);
     resize(settings.currSize,settings.currSize);
 }
+*/
+/*
+void Dyno::setNewPosition(float koef )
+{
 
+    settings.currX = int((float)settings.startX /koef);
+    settings.currY = int((float)settings.startY / koef);
+    settings.currSize = int ((float)settings.startSize/koef);
+
+    qDebug() << "Dyno::setNewPosition" << settings.currX << settings.currY<<settings.currSize<<koef;
+}
+*/
 
 void Dyno::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
-
+qDebug() << "DYNO paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
     //   qDebug() << "Dyno::paintEvent";
     QPainter painter(this);
     QPen pen;
@@ -64,11 +61,6 @@ void Dyno::paintEvent(QPaintEvent *event)
     points[2] = QPoint(settings.currSize + settings.currX,settings.currSize + settings.currY);
     points[3] = QPoint(0 + settings.currX,settings.currSize + settings.currY);
 
-    //points[0] = QPoint(100,100);
-    //points[1] = QPoint(100,100);
-    // points[2] = QPoint(100,100);
-    // points[3] = QPoint(100,100);
-
     painter.drawPolygon(points,4);
 
     imgBackground= new QImage();
@@ -77,12 +69,12 @@ void Dyno::paintEvent(QPaintEvent *event)
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 
-    resize(settings.currSize,settings.currSize);
-    move(settings.startX,settings.startY);
+ //   resize(settings.currSize,settings.currSize);
+ //   move(settings.currX,settings.currY);
 
 }
 
-
+/*
 void Dyno::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton) {
         // qDebug() << "dyno mousePressEvent" ;
@@ -109,13 +101,15 @@ void Dyno::mouseMoveEvent(QMouseEvent *event)
 void Dyno::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
-        qDebug() << "Pipe mouseDoubleClickEvent" ;
+        qDebug() << "Dyno mouseDoubleClickEvent" ;
         // emit openServicePump();
         //emit openServicePipe();
 
         WidgetService *serviceForm = new WidgetService();
+       // serviceForm->ui.
         serviceForm->show();
 
     }
 
 }
+*/

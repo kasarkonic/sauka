@@ -1,20 +1,30 @@
 #include "pipe.h"
-#include "widgetservice.h"
-#include <QPainter>
-#include <QtMath>
-#include<QMouseEvent>
-#include <QSettings>
 
-Pipe::Pipe(QWidget *parent)
-    : WidgetDiagramElement(parent)
+//#include <QPainter>
+//#include <QtMath>
+//#include<QMouseEvent>
+//#include <QSettings>
+
+Pipe::Pipe(Global &global,QString name, QWidget *parent)
+    : WidgetDiagramElement(global,name, parent)
 
 {
+    qDebug() << "Pipe::Pipe";
+    QPalette pal = QPalette();
+    pal.setColor(QPalette::Window, Qt::lightGray);
+    this->setAutoFillBackground(true);
+    this->setPalette(pal);
 
+    settings.startX = global.widData[settings.name].startX;
+    settings.startY = global.widData[settings.name].startY;
+    settings.startSize = global.widData[settings.name].startSize;
+    settings.startSizeWi = global.widData[settings.name].startSizeWi;
+    settings.options = global.widData[settings.name].options;
+    angle = settings.options;
 
-   // QPalette pal = QPalette();
-   // pal.setColor(QPalette::Window, Qt::lightGray);
-   // this->setAutoFillBackground(true);
-   // this->setPalette(pal);
+    settings.currSize = settings.startSize;        //Hi
+    settings.currSizeWi = settings.startSizeWi;
+
 }
 
 void Pipe::get(int *pnt)
@@ -26,36 +36,36 @@ void Pipe::get(int *pnt)
 
 void Pipe::setNewPosition(float koef)
 {
-    settings.currX = int(settings.startX /koef);
-    settings.currY = int(settings.startY / koef);
+    WidgetDiagramElement::setNewPosition(koef); // call base class
+    settings.currSize = int(settings.startSize /koef);        //Hi
+    settings.currSizeWi = int(settings.startSizeWi /koef);
+    //currHi = settings.currSize;        //Hi
+   // currWi = settings.currSizeWi;
 
-    settings.wi = int (settings.starwi/koef);
-    settings.hi = int (settings.starhi/ koef);
-    move(settings.currX,settings.currY);
- //   qDebug() << "koef"<< koef<< settings.startX<< settings.startY <<settings.starwi<< settings.starhi;
-   // update();
 
+ //   qDebug() << "Pipe::setNewPosition";
 }
-
+/*
 void Pipe::updateSettings()
 {
+        qDebug() << "Pipe updateSettings" << settings.options;
    // settings.wi = settings.starwi;
    // settings.hi = settings.starhi;
 
     //settings.currX = settings.startX;
     //settings.currY = settings.startY;
 
-    move(settings.startX,settings.startY);
+   // move(settings.startX,settings.startY);
 
-    if(settings.flow == 0){        // 0 stop, 1 ->, 2<-)
-        killTimer(timerId);
-    }
-    else{
-         timerId = startTimer(200, Qt::CoarseTimer);
-    }
+   // if(settings.flow == 0){        // 0 stop, 1 ->, 2<-)
+   //     killTimer(timerId);
+   // }
+   // else{
+   //      timerId = startTimer(200, Qt::CoarseTimer);
+   // }
 }
 
-
+*/
 /*
 void Pipe::loadSettings()
 {
@@ -107,14 +117,12 @@ void Pipe::saveSettings()
 void Pipe::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
-
-  // qDebug() << "Pipe::paintEvent";
-
+    qDebug() << "Pipe::paintEvent" << settings.currX << settings.currY;
     QPainter painter(this);
     QPen pen;
     pen.setWidth(2);    //draw pipe
     pen.setColor(Qt::black);
-    painter.setBrush(settings.pipeColor);// (pipeColour);
+    painter.setBrush(pipeColor);// (pipeColour);
     painter.setPen(pen);
 
     pen.setWidth(2);    //draw pipe
@@ -124,31 +132,35 @@ void Pipe::paintEvent(QPaintEvent *event)
 
     // arrow points
 
-    int wi = settings.wi;
-    int hi = settings.hi;
-    int stX = settings.currX;
-    int stY = settings.currY;
-    float an = settings.angle * M_PI /180;
+    int stX ;
+    int stY ;
+
+    int hi = settings.currSize;        //Hi
+    int wi = settings.currSizeWi;
+
+
+    float an = settings.options * M_PI /180;
 
     int diog = sqrt(wi*wi + hi*hi);
     float diogAngle = atan((double)wi/hi);
 
-    if (settings.angle >= 0 && settings.angle <= 90){
+
+    if (settings.options >= 0 && settings.options <= 90){
         stY = wi * sin(an);
         stX = 0;
         resize(wi * cos(an) + hi * sin(an),hi * cos(an)  + wi * sin(an));
     }
-    if (settings.angle > 90  && settings.angle <= 180){
+    if (settings.options > 90  && settings.options <= 180){
         stX  = wi * sin(an-M_PI/2);
         stY = hi * cos(M_PI - an) + wi * cos(an - M_PI/2);
         resize(wi * sin(an-M_PI/2) + hi * cos(an-M_PI/2),stY);
     }
-    if (settings.angle > 180 && settings.angle <= 270){
+    if (settings.options > 180 && settings.options <= 270){
         stX  = hi * sin(an-M_PI) + wi * cos(an-M_PI) ;
         stY = settings.startY = hi * cos(an - M_PI)  ;
         resize(stX ,hi * cos(an - M_PI) + wi * sin(an-M_PI));
     }
-    if (settings.angle > 270 && settings.angle <= 360){
+    if (settings.options > 270 && settings.options <= 360){
         stX  = hi * cos( an - 3*M_PI/2) ;
         stY = 0;
         resize(stX +  wi * sin( an - 3*M_PI/2) , diog * cos( 2* M_PI - (an + diogAngle) ));
@@ -182,7 +194,7 @@ void Pipe::paintEvent(QPaintEvent *event)
     painter.setPen(pen);
     painter.drawLines(pipemiddle,1);
 
-    if(settings.flow != 0)
+    if(settings.value != 0)
     {
         //draw arrow
 
@@ -210,8 +222,11 @@ void Pipe::paintEvent(QPaintEvent *event)
         painter.drawLines(arrowPoints,2);
     }
 
-    resize(settings.starhi,settings.starwi);
-    move(settings.startX,settings.startY);
+
+//painter.drawText(10,10,"hello");
+
+//    resize(settings.currSize,settings.currSize);
+//    move(settings.currX,settings.currY);
     //painter.drawText(10,10,"hello");
 
 }
@@ -222,12 +237,12 @@ void Pipe::timerEvent(QTimerEvent *event){
     //qDebug() << "timerEvent" << att;
 
     att = att + step;
-    if (att > settings.hi - arrTop)
-        att = 0;
+  //  if (att > currHi - arrTop)
+  //      att = 0;
 
-// qDebug() << "Pipe::att "<< att ;
+ qDebug() << "Pipe::att "<< att ;
 }
-
+/*
 void Pipe::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton) {
          qDebug() << "mousePressEvent" ;
@@ -258,9 +273,10 @@ void Pipe::mouseDoubleClickEvent(QMouseEvent *event)
        // emit openServicePump();
         //emit openServicePipe();
 
-        WidgetService *serviceForm = new WidgetService();
-        serviceForm->show();
+    //    WidgetService *serviceForm = new WidgetService();
+     //   serviceForm->show();
 
     }
 
 }
+*/

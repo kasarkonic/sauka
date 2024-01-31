@@ -1,9 +1,8 @@
 #ifndef VALVE_H
 #define VALVE_H
 
-#include <QObject>
-#include <QWidget>
-#include "mytriangle.h"
+//#include <QObject>
+//#include <QWidget>
 #include "widgetdiagramelement.h"
 
 
@@ -28,61 +27,35 @@ class Valve : public WidgetDiagramElement
 {
     Q_OBJECT
 public:
-    Valve(QWidget *parent = nullptr);
-   // void saveSettings();
-   // void loadSettings();
+    Valve(Global &global,QString name, QWidget *parent = nullptr);
+    // void saveSettings();
+    // void loadSettings();
 
-    void setStartParam(QPoint dimA, QPoint dimC,QPoint pos);
-    void setMySize(int val);
-    MyTriangle myTriangle1;
-    MyTriangle myTriangle2;
-    MyTriangle myTriangle3;
-    MyTriangle myTriangle4;
-    void updateWidget();
+    // void setStartParam(QPoint dimA, QPoint dimC,QPoint pos);
+
+
 
     void setNewPosition(float koef);
-    void updateSettings();
-    struct  {
-        int type = 3; // valve
-        QString name = "Valve";
-        int startX = 120;
-        int startY = 120;
-        int startSize = 130;
-
-        int currX;
-        int currY;
-        int currSize;
-
-       // int triangStartSize = 250;     // widget size
-       // int triangSize = 150;     // widget size
-        int status = 0;
-        int style = 0;
-
-
-    } settings;
-
+   // void updateSettings() override;
 
 signals:
-    void openServiceValve();
+    // void openServiceValve();
 
 protected:
-    void    mousePressEvent(QMouseEvent *event) override;
+    void    paintEvent(QPaintEvent *event) override;
     void    timerEvent(QTimerEvent *event) override;
-    void    mouseMoveEvent (QMouseEvent *event) override;
-    void    mouseDoubleClickEvent(QMouseEvent *event) override;
+    void    updateWidget();
 
 private:
-    int mySize;
-    int orientation;
-    void drawTriangle();
-    QPoint position;
-    void setMyStyle();
+    int angle;
+
     void updateStatus();
     int  timerId = 0;
-    int att = 2;
+    int att = 0;
 
-    //QString settingsFile;
-    //void loadSettings(QString name);
+    QPoint points[4];
+    void calcPoints(int angle);
+    // QColor color = Qt::yellow;;
 
 };
 

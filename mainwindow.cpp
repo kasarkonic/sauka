@@ -1,11 +1,12 @@
 #include "mainwindow.h"
+#include "dyno.h"
+#include "qforeach.h"
 #include "ui_mainwindow.h"
 #include <Qdebug>
 
 #include <QFile>
-#include "servicevalve.h"
-#include "servicepump.h"
-#include "widgetService.h"
+
+
 #include <QMouseEvent>
 #include "global.h"
 #include <QDateTime>
@@ -16,7 +17,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     : QMainWindow(parent)
     , global(global)
     , ui(new Ui::MainWindow)
-    ,  widgetData(global)
+    //,  widgetData(global)
 
 
 { 
@@ -33,32 +34,29 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     // BooleanSetting = settings.value("SettingName", default).toBool();
 
 
-    areaY = size().height();
-    areaX = size().width();
-    qDebug() << "area Width" << areaX <<":" << areaY;
+    //areaY = size().height();
+    //areaX = size().width();
+    global.UIXsize = size().width();
+    global.UIYsize = size().height();
+    qDebug() << "UI size" << global.UIXsize <<":" << global.UIYsize;
 
-   // initUI();
+    // initUI();
     drawWidgets();
 
     initTimer = true;
-   // timerId = startTimer(100);
+    // timerId = startTimer(100);
 
 
     // connect(&valve,SIGNAL(openService()),this,SLOT(openServiceFormValve()));  old style
-    connect(
-                &valve, &Valve::openServiceValve,
-                this, &MainWindow::openServiceFormValve
-                );
-    connect(
-                &pump, &Pump::openServicePump,
-                this, &MainWindow::openServiceFormPump
-                );
+    //    connect(
+    //               &valve, &Valve::openServiceValve,
+    //               this, &MainWindow::openServiceFormValve
+    //               );
+    //   connect(
+    //                &pump, &Pump::openServicePump,
+    //                this, &MainWindow::openServiceFormPump
+    //                );
 
-
-   // connect(
-    //    &pipe, &Pipe::openServicePipe,
-   //     &widgetService, &WidgetService::openWidgetServiceForm
-   //     );
 
 
     // sender, &Sender::valueChanged,
@@ -78,46 +76,9 @@ MainWindow::~MainWindow()
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED (event);
-
-    float koefx = 1.0;
-    float koefy = 1.0;
-    float koef = 1.0;
-
-    // qDebug() << "resizeEvent"  << size().height() << size().width();
-
-    if(size().width() > 0 && size().height() > 0)
-    {
-        koefx =  ((float)areaX/size().width());
-        koefy = ((float)areaY/size().height());
-    }
-
-    if(koefx >= koefy){
-        koef = koefy;
-    }
-    else{
-        koef = koefx;
-    }
-
-    if(koef == 0){
-        koef = 1;
-    }
-    qDebug() << "resizeEvent X=" << size().width() << "Y=" <<  size().height() << "koef= " << koef;
-
-    if(areaY/20 >= areaX/30){
-        minWidgSize = areaX/30;   // minWidth
-    }
-    {
-        minWidgSize = areaY/20; // minHeight
-    }
-
-    if(minWidgSize < 15)
-        minWidgSize = 15;
-
-    global.zoomKoef = koef;
-    resizeAllKoef(koef);
-    //int data;
-    // pipe.get( &data );
-    // qDebug() << "pipe.get( &data );" << data  ;
+    //qDebug() << "MainWindow::resizeEvent"  << size().height() << size().width();
+    global.UIXresizeSize = size().width();
+    global.UIYresizeSize = size().height() ;
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event){
@@ -145,53 +106,41 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
     if(initTimer){
         initTimer = false;
-       // timerId = startTimer(1000);
+        // timerId = startTimer(1000);
         killTimer(timerId);
-       //  timerId = startTimer(1000);
+        //  timerId = startTimer(1000);
 
-       // setShow2();
-      // updateSettingForAll();
+        // setShow2();
+        // updateSettingForAll();
     }
     else{
-    currentTime = QTime::currentTime().toString("hh:mm:ss");
-    setWindowTitle(currentTime);
+        currentTime = QTime::currentTime().toString("hh:mm:ss");
+        setWindowTitle(currentTime);
+        // qDebug() << currentTime ;
+        att += 1;
 
-    // qDebug() << currentTime ;
-
-    att += 1;
-    qDebug() << "Main att" << att ;
-    if(att%10 == 0){
-        //setShow1();
-        // pump.settings.rotate = 0;//1
-        // pump.updateSettings();
     }
-    if(att%10 == 5){
-       // setShow2();
-        // pump.settings.rotate =1;//1
-        // pump.updateSettings();
-    }
-}
 }
 
 
 void MainWindow::openServiceFormValve()
 {
 
-    Servicevalve *servicevalve = new Servicevalve(this,sender());
-    qDebug() << "Main !! Open service form !!!" ;
-    Valve* valve = qobject_cast<Valve*>(sender());
-    qDebug() << "Open service : " << valve->settings.name ;
-    servicevalve->show();
+    //  Servicevalve *servicevalve = new Servicevalve(this,sender());
+    //  qDebug() << "Main !! Open service form !!!" ;
+    // Valve* valve = qobject_cast<Valve*>(sender());
+    //  qDebug() << "Open service : " << valve->settings.name ;
+    //  servicevalve->show();
 }
 
 void MainWindow::openServiceFormPump()
 {
-  //  qDebug() << "Main !! Open service form !!!" ;
-  //  Servicepump *servicepump = new Servicepump(this,sender());
+    //  qDebug() << "Main !! Open service form !!!" ;
+    //  Servicepump *servicepump = new Servicepump(this,sender());
 
-  //  Pump* pump = qobject_cast<Pump*>(sender());
-  //  qDebug() << "Open service : " << pump->settings.name ;
-  //  servicepump->show();
+    //  Pump* pump = qobject_cast<Pump*>(sender());
+    //  qDebug() << "Open service : " << pump->settings.name ;
+    //  servicepump->show();
 
 }
 
@@ -199,10 +148,10 @@ void MainWindow::openServiceFormPipe()
 {
 
     qDebug() << "Main Open service pipe ??? : " ;
-  //  WidgetService *widgetService = new WidgetService (this,global,sender());
-  //  Pipe* pipe = qobject_cast<Pipe*>(sender());
-  //  qDebug() << "Open service : " << pipe->settings.name ;
-  //  widgetService->show();
+    //  WidgetService *widgetService = new WidgetService (this,global,sender());
+    //  Pipe* pipe = qobject_cast<Pipe*>(sender());
+    //  qDebug() << "Open service : " << pipe->settings.name ;
+    //  widgetService->show();
 
 
 
@@ -211,13 +160,13 @@ void MainWindow::openServiceFormPipe()
 void MainWindow::loadSettings()
 {
 
-   // QString settingsFile = global.settingsFileName;
-  //  QSettings settings(settingsFile, QSettings::NativeFormat);
-   // QString sText = settings.value("last_save", "").toString();
-  //  qDebug() << "last_save " << sText ;
+    // QString settingsFile = global.settingsFileName;
+    //  QSettings settings(settingsFile, QSettings::NativeFormat);
+    // QString sText = settings.value("last_save", "").toString();
+    //  qDebug() << "last_save " << sText ;
 
-   // valve.loadSettings();
-   // pump.loadSettings();
+    // valve.loadSettings();
+    // pump.loadSettings();
 
 
 }
@@ -239,7 +188,7 @@ void MainWindow::saveSettings()
     sText = date.toString("dd.MM.yyyy hh:mm:ss");
 
 
-   // sText = QTime::currentTime().toString("YY:MM:DD:hh:mm:ss");
+    // sText = QTime::currentTime().toString("YY:MM:DD:hh:mm:ss");
     qDebug() << "QTime::currentTime:" << sText ;
     settings.setValue("last_save", sText);
 
@@ -253,72 +202,21 @@ void MainWindow::saveSettings()
 
 }
 
-void MainWindow::setShow1()
-{
-qDebug() << "setShow1\n" ;
-
-
-    updateSettingForAll();
-
-    QString str = currentTime;
-    str.append("Maisītājs tiek pieslēgts 1. tvertnei\n");
-    appendInfo(str,Qt::black);
-
-    //float koef = 0.771094;
-    //resizeAllKoef(int koef)
-
-}
-
-void MainWindow::setShow2()
-{
-
-qDebug() << "setShow2\n" ;
-    valve.settings.status = ValveStatus::Close;//ValveStatus::OpenAC;
-    valve1.settings.status = ValveStatus::OpenAC;//ValveStatus::Close;
-
-    updateSettingForAll();
-
-    QString str = currentTime;
-    str.append(" Maisītājs tiek pieslēgts 2. tvertnei\n");
-    appendInfo(str,Qt::black);
-
-    // float koef = 0.771094;
-    resizeAllKoef(global.zoomKoef);
-}
 
 void MainWindow::resizeAllKoef(float koef)
 {
 
-    tvertne.setNewPosition(koef);
-    tvertne1.setNewPosition(koef);
+    // tvertne.setNewPosition(koef);
+    // tvertne1.setNewPosition(koef);
 
-    mix.setNewPosition(koef);
-
+    // mix.setNewPosition(koef);
+    //
 }
 
 void MainWindow::updateSettingForAll()
 {
 
 
-  //  ServiceWidget* serviceWidget2 = &pump1;
-  //  serviceWidget2->updateSettings();
-
- //   serviceWidget2->setNewPosition(1.1);
-
-    //serviceWidget2->loadSettings();
-    //serviceWidget2->loadSettings();
-
-
-
-
-
-
-    dyno.updateSettings();
-
-    tvertne.updateSettings();
-    tvertne1.updateSettings();
-
-    mix.updateSettings();
 
 }
 
@@ -357,29 +255,6 @@ void MainWindow::initUI()
 
 
 
-
-
-   ui->horizontalLayout_ProcessFlow->addWidget(&valve);
-   ui->horizontalLayout_ProcessFlow->addWidget(&valve1);
-   ui->horizontalLayout_ProcessFlow->addWidget(&pipe);
-   ui->horizontalLayout_ProcessFlow->addWidget(&pipe1);
-   ui->horizontalLayout_ProcessFlow->addWidget(&pipe2);
-   ui->horizontalLayout_ProcessFlow->addWidget(&pipe3);
-   ui->horizontalLayout_ProcessFlow->addWidget(&pipe4);
-   ui->horizontalLayout_ProcessFlow->addWidget(&pipe5);
-   ui->horizontalLayout_ProcessFlow->addWidget(&pump);
-   ui->horizontalLayout_ProcessFlow->addWidget(&pump1);
-   ui->horizontalLayout_ProcessFlow->addWidget(&dyno);
-   ui->horizontalLayout_ProcessFlow->addWidget(&tvertne);
-   ui->horizontalLayout_ProcessFlow->addWidget(&tvertne1);
-   ui->horizontalLayout_ProcessFlow->addWidget(&mix);
-
-    loadSettings();
-    resizeAllKoef(1.0);
-    updateSettingForAll();
-
-
-
 }
 
 
@@ -404,95 +279,66 @@ void MainWindow::drawWidgets()
 {
     qDebug() << "widData draw  " << global.widData.size() << "elements";
 
-//    << global.widData[0].type<< global.widData[1].type;
 
-        foreach (WidgetData::dataStruct widData, global.widData){
 
-            qDebug() << "widData Draw: " << widData.type;
-            switch (widData.type) {
+    foreach (Global::wdataStruct widData, global.widData){
+
+        qDebug() << "widData Draw: " << widData.type << widData.name;
+        switch (widData.type) {
             case WidgetType::widgT::Dyno:
-            {
-                Dyno *dynoA = new Dyno(this);
-                dynoA->settings.startX = widData.startX;
-                dynoA->settings.startY = widData.startY;
-                dynoA->settings.startSize = widData.startsize;
+             {
+                Dyno *dynoA = new Dyno(global,widData.name,this);
                 ui->horizontalLayout_ProcessFlow->addWidget(dynoA);
-               // dynoA->setNewPosition(global.zoomKoef);
-
             }
-                break;
+        break;
 
-            case WidgetType::widgT::Mix:
+        case WidgetType::widgT::Mix:
+        {
+            Mix *mixA = new Mix(global,widData.name,this);
+            ui->horizontalLayout_ProcessFlow->addWidget(mixA);
+        }
+        break;
+
+        case WidgetType::widgT::Pipe:
             {
-                Mix *mixA = new Mix(this);
-                mixA->settings.startX = widData.startX;
-                mixA->settings.startY = widData.startY;
-                mixA->settings.startSize = widData.startsize;
-                ui->horizontalLayout_ProcessFlow->addWidget(mixA);
-               // mixA->setNewPosition(global.zoomKoef);
-            }
-                break;
-
-            case WidgetType::widgT::Pipe:
-
-                {
-                Pipe *pipeA = new Pipe(this);
-
-
-                pipeA->settings.startX = widData.startX;
-                pipeA->settings.startY = widData.startY;
-                pipeA->settings.angle = widData.startsize;
+                Pipe *pipeA = new Pipe(global,widData.name,this);
                 ui->horizontalLayout_ProcessFlow->addWidget(pipeA);
-               // pipeA->setNewPosition(global.zoomKoef);
-
             }
-                break;
+            break;
 
-            case WidgetType::Pump:
-            {
-                Pump *pumpA = new Pump(this);
-                pumpA->settings.startX = widData.startX;
-                pumpA->settings.startY = widData.startY;
-                pumpA->settings.startSize = widData.startsize;
-                ui->horizontalLayout_ProcessFlow->addWidget(pumpA);
-                pumpA->setNewPosition(global.zoomKoef);
-            }
-                break;
+        case WidgetType::Pump:
+        {
+            Pump *pumpA = new Pump(global,widData.name,this);
+            ui->horizontalLayout_ProcessFlow->addWidget(pumpA);
 
-            case WidgetType::Tvertne:
-            {
-                Tvertne *tvertneA = new Tvertne(this);
-                tvertneA->settings.startX = widData.startX;
-                tvertneA->settings.startY = widData.startY;
-                tvertneA->settings.startSize = widData.startsize;
-                ui->horizontalLayout_ProcessFlow->addWidget(tvertneA);
-               // tvertneA->setNewPosition(global.zoomKoef);
-            }
-                break;
+        }
+        break;
 
-            case WidgetType::Valve:
-            {
-                Valve *valveA = new Valve(this);
-                valveA->settings.startX = widData.startX;
-                valveA->settings.startY = widData.startY;
-                valveA->settings.startSize = widData.startsize;
-                ui->horizontalLayout_ProcessFlow->addWidget(valveA);
-                valveA->setNewPosition(global.zoomKoef);
-            }
-                break;
+        case WidgetType::Tvertne:
+        {
+            Tvertne *tvertneA = new Tvertne(global,widData.name,this);
+            ui->horizontalLayout_ProcessFlow->addWidget(tvertneA);
+
+        }
+        break;
+
+        case WidgetType::Valve:
+        {
+            Valve *valveA = new Valve(global,widData.name,this);
+            ui->horizontalLayout_ProcessFlow->addWidget(valveA);
+
+        }
+        break;
 
 
+        default:
+            qDebug() << "Wrong widget type !!! "  <<widData.type;
+            break;
+        }
 
 
+    }
 
-
-            default:
-                 qDebug() << "Wrong widget type !!! "  <<widData.type;
-                break;
-            }
-
-
-}
 
 }
 

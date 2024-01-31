@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>889</width>
-    <height>805</height>
+    <width>438</width>
+    <height>472</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -166,17 +166,17 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit"/>
+        <widget class="QLineEdit" name="lineEdit_Xpos"/>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_4">
+        <widget class="QPushButton" name="pushButton_Xplus">
          <property name="text">
           <string>+</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="pushButton_Xminus">
          <property name="text">
           <string>-</string>
          </property>
@@ -194,17 +194,17 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_2"/>
+        <widget class="QLineEdit" name="lineEdit_Ypos"/>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_6">
+        <widget class="QPushButton" name="pushButton_Yplus">
          <property name="text">
           <string>+</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_5">
+        <widget class="QPushButton" name="pushButton_Yminus">
          <property name="text">
           <string>-</string>
          </property>
@@ -222,17 +222,45 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_3"/>
+        <widget class="QLineEdit" name="lineEdit_startSize"/>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_8">
+        <widget class="QPushButton" name="pushButton_sizeplus">
          <property name="text">
           <string>+</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_7">
+        <widget class="QPushButton" name="pushButton_sizeMinus">
+         <property name="text">
+          <string>-</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="5,2,2,2">
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Options</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_options"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_OptionsPlus">
+         <property name="text">
+          <string>+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_OptionsMinus">
          <property name="text">
           <string>-</string>
          </property>

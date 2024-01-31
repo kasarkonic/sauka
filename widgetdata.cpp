@@ -4,51 +4,10 @@
 WidgetData::WidgetData(Global &global):
     global(global)
 {
-    initData();
+ //   initData();
 }
-
 
 /*
-
-namespace WidgetName
-{
-enum widg{
-    Tvertne1,
-    Tvertne2,
-    Tvertne3,
-    Tvertne4,
-
-    Pipe1,
-    Pipe2,
-    Pipe3,
-    Pipe4,
-    Valve1,
-    Valve2,
-    Valve3,
-    Valve4,
-    Pump1,
-    Pump2,
-    Pump3,
-    Pump4,
-    Dyno,
-    Mix,
-};
-}
-
-
-
-namespace WidgetType
-{
-enum {
-    Dyno,
-    Mix,
-    Pipe,
-    Pump,
-    Tvertne,
-    Valve,
-};
-}
-*/
 void WidgetData::initData()
 {
     add(WidgetType::Mix,        WidgetName::Mix,  100,     100    ,50);

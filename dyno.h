@@ -2,38 +2,27 @@
 #define DYNO_H
 
 #include "widgetdiagramelement.h"
-#include <QObject>
-#include <QWidget>
 
 
 class Dyno : public WidgetDiagramElement
 {
     Q_OBJECT
 public:
-    Dyno(QWidget *parent = nullptr);
-    void updateSettings();
-    void setNewPosition(float koef);
+    Dyno(Global &global,QString name, QWidget *parent = nullptr);
 
-    struct  {
-        int type = 4; // Dyno
-        QString name = "Dyno";
-
-        int startX = 100;
-        int startY = 100;
-        int startSize = 100;
-
-        int currX;
-        int currY;
-        int currSize;
-    } settings;
 
 protected:
     void    paintEvent(QPaintEvent *event) override;
-    void    mousePressEvent(QMouseEvent *event) override;
-    void    mouseMoveEvent (QMouseEvent *event) override;
-    void    mouseDoubleClickEvent(QMouseEvent *event) override;
+ //   void    mousePressEvent(QMouseEvent *event) override;
+ //   void    mouseMoveEvent (QMouseEvent *event) override;
+//    void    mouseDoubleClickEvent(QMouseEvent *event) override;
+
+ // void setNewPosition(float koef) ;
+  //    void updateSettings() override;
+
 private:
-QImage *imgBackground;
+    QImage *imgBackground;
+   // Global &global;
 
 
 };

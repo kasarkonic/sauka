@@ -3,35 +3,74 @@
 
 #include <QWidget>
 
-#include"global.h"
-#include "pipe.h"
+//#include"global.h"
+
+#include "widgetDiagramElement.h"
+#include <QMainWindow>
+
 
 
 namespace Ui {
 class WidgetService;
 }
 
-class WidgetService : public QWidget
+class WidgetService :  public  QWidget
 {
     Q_OBJECT
 
 public:
-    explicit WidgetService(QWidget *parent = nullptr);//, QObject *obj = nullptr);
+   // explicit WidgetService(WidgetDiagramElement::widDataStruct &wsettings, QWidget *parent = nullptr);
+    explicit WidgetService(WidgetDiagramElement *widgetElement, QWidget *parent = nullptr);
+
     ~WidgetService();
     void openWidgetServiceForm();
+     Ui::WidgetService *ui;
+     void updateSettings();
+
 protected:
     void    mousePressEvent(QMouseEvent *event) override;
     void    mouseMoveEvent (QMouseEvent *event) override;
+    void    mouseDoubleClickEvent(QMouseEvent *event) override;
+private slots:
+    void on_pushButton_Xplus_clicked();
+
+    void on_pushButton_Xminus_clicked();
+
+    void on_pushButton_Yplus_clicked();
+
+    void on_pushButton_Yminus_clicked();
+
+    void on_pushButton_sizeplus_clicked();
+
+    void on_pushButton_sizeMinus_clicked();
+
+    void on_pushButton_OptionsMinus_clicked();
+
+    void on_pushButton_OptionsPlus_clicked();
+
+    void on_lineEdit_Xpos_editingFinished();
+
+    void on_lineEdit_Ypos_editingFinished();
+
+    void on_lineEdit_startSize_editingFinished();
+
+    void on_lineEdit_options_editingFinished();
+
 private:
-   // Global &global;
+  // WidgetDiagramElement::widDataStruct &wsettings;
+   WidgetDiagramElement *widgetElement;
+    // Global &global;
     QObject obj;
-    Ui::WidgetService *ui;
-    Pipe pipe;
+    //Ui::WidgetService *ui;
+   // Pipe pipe;
 
     void updateUIvalue();
     int mouseStartPointX;
     int mouseStartPointY;
-    //void openWidgetServiceForm();
+    //void updateSettings();
+    void updateFormData();
+    QString currentWid;
+
 };
 
 

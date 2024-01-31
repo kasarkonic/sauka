@@ -1,8 +1,8 @@
 #ifndef WIDGETDATA_H
 #define WIDGETDATA_H
 
-#include <QObject>
-
+//#include <QObject>
+/*
 class Global;
 
 
@@ -44,10 +44,11 @@ enum widgT{
     Valve,
 };
 }
-
+*/
 
 class WidgetData
 {
+/*
 public:
 
     struct dataStruct {
@@ -76,7 +77,7 @@ private:
     Global &global;
     void initData();
     void add(WidgetType::widgT type, WidgetName::widgN name,int startX, int startY, int startsize);
-
+*/
 };
 
 #endif // WIDGETDATA_H
