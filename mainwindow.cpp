@@ -313,7 +313,7 @@ void MainWindow::drawWidgets()
 
 void MainWindow::delAllWid()
 {
-    foreach (Global::wdataStruct widData, global.widHash){
+     foreach (Global::wdataStruct widData, global.widHash){
         // qDebug() << widData.name<< " exist ? " <<widData.ptrCurrWidget;
         if(widData.ptrCurrWidget){
             widData.ptrCurrWidget->close();

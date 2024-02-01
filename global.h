@@ -5,6 +5,7 @@
 
 #include <QObject>
 #include <QHash>
+#include <QList>
  //#include <QTimer>
 
 
@@ -49,7 +50,6 @@ public:
     struct  act{
         ActuatorType::actT type = ActuatorType::actT::Relay;  // Dyno
         QString name = "Dyno";
-        int actNr = 0;
         int adress = 0;
         int analog = 0;
         int digital = 0;
@@ -57,8 +57,8 @@ public:
 
     struct  sens{
         SensorType::sensT type = SensorType::sensT::Digital;  //
-        QString name = "Valve 1";
-        int adress = 0;
+        QString name = "Sens";
+       // int adress = 0;
         int analog = 7; //VALUE
         int digital = 2; //VALUE
     };
@@ -79,11 +79,14 @@ public:
         WidgetDiagramElement * ptrCurrWidget = nullptr;
         WidgetService * ptrCurrWidgetService = nullptr;
         int page = 0;
+        int actAddres = 0;
+        int sensAddres1 = 0;
+        int sensAddres2 = 0;
 
     };
 
-    QHash<QString,act> actHash;
-    QHash<QString,sens> sensHash;
+    QList<act> actList;
+    QList<sens> sensList;
     QHash<QString,wdataStruct> widHash;
 
     QString settingsFileName;
@@ -98,8 +101,7 @@ private:
 
 
     void creatWidgList();
-
-    void addWidgList(WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page);
+    void addWidgList(WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page, int actAdr, int sensAdr1, int sensAdr2);
 
     void creatActList();
     void addActList(QString name, ActuatorType::actT tp, int addres);
