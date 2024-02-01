@@ -9,6 +9,7 @@
 
 #include <QMouseEvent>
 #include "global.h"
+#include "widgetservice.h"
 #include <QDateTime>
 
 
@@ -17,7 +18,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     : QMainWindow(parent)
     , global(global)
     , ui(new Ui::MainWindow)
-    //,  widgetData(global)
+//,  widgetData(global)
 
 
 { 
@@ -44,7 +45,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     drawWidgets();
 
     initTimer = true;
-    // timerId = startTimer(100);
+     timerId = startTimer(100);
 
 
     // connect(&valve,SIGNAL(openService()),this,SLOT(openServiceFormValve()));  old style
@@ -104,58 +105,26 @@ void MainWindow::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
 
-    if(initTimer){
-        initTimer = false;
+   // if(initTimer){
+       // initTimer = false;
         // timerId = startTimer(1000);
-        killTimer(timerId);
+       // killTimer(timerId);
         //  timerId = startTimer(1000);
 
         // setShow2();
         // updateSettingForAll();
-    }
-    else{
+   // }
+   // else{
         currentTime = QTime::currentTime().toString("hh:mm:ss");
         setWindowTitle(currentTime);
+
+        ui->statusbar->showMessage (statusStr + currentTime);
         // qDebug() << currentTime ;
         att += 1;
 
-    }
+ //   }
 }
 
-
-void MainWindow::openServiceFormValve()
-{
-
-    //  Servicevalve *servicevalve = new Servicevalve(this,sender());
-    //  qDebug() << "Main !! Open service form !!!" ;
-    // Valve* valve = qobject_cast<Valve*>(sender());
-    //  qDebug() << "Open service : " << valve->settings.name ;
-    //  servicevalve->show();
-}
-
-void MainWindow::openServiceFormPump()
-{
-    //  qDebug() << "Main !! Open service form !!!" ;
-    //  Servicepump *servicepump = new Servicepump(this,sender());
-
-    //  Pump* pump = qobject_cast<Pump*>(sender());
-    //  qDebug() << "Open service : " << pump->settings.name ;
-    //  servicepump->show();
-
-}
-
-void MainWindow::openServiceFormPipe()
-{
-
-    qDebug() << "Main Open service pipe ??? : " ;
-    //  WidgetService *widgetService = new WidgetService (this,global,sender());
-    //  Pipe* pipe = qobject_cast<Pipe*>(sender());
-    //  qDebug() << "Open service : " << pipe->settings.name ;
-    //  widgetService->show();
-
-
-
-}
 
 void MainWindow::loadSettings()
 {
@@ -167,7 +136,6 @@ void MainWindow::loadSettings()
 
     // valve.loadSettings();
     // pump.loadSettings();
-
 
 }
 
@@ -191,8 +159,6 @@ void MainWindow::saveSettings()
     // sText = QTime::currentTime().toString("YY:MM:DD:hh:mm:ss");
     qDebug() << "QTime::currentTime:" << sText ;
     settings.setValue("last_save", sText);
-
-
 
 
     settings.setValue("UI_width", size().width());
@@ -281,63 +247,79 @@ void MainWindow::drawWidgets()
 
     foreach (Global::wdataStruct widData, global.widHash){
 
-        qDebug() << "drawWidgets Draw: " << widData.type << widData.name;
-        switch (widData.type) {
+        if( widData.page == currPage || widData.page == 3 ){    // all pages
+            qDebug() << "drawWidgets Draw: " << widData.type << widData.name;
+            switch (widData.type) {
             case WidgetType::widgT::Dyno:
-             {
+            {
                 Dyno *dynoA = new Dyno(global,widData.name,this);
                 ui->horizontalLayout_ProcessFlow->addWidget(dynoA);
             }
-        break;
+            break;
 
-        case WidgetType::widgT::Mix:
-        {
-            Mix *mixA = new Mix(global,widData.name,this);
-            ui->horizontalLayout_ProcessFlow->addWidget(mixA);
-        }
-        break;
+            case WidgetType::widgT::Mix:
+            {
+                Mix *mixA = new Mix(global,widData.name,this);
+                ui->horizontalLayout_ProcessFlow->addWidget(mixA);
+            }
+            break;
 
-        case WidgetType::widgT::Pipe:
+            case WidgetType::widgT::Pipe:
             {
                 Pipe *pipeA = new Pipe(global,widData.name,this);
                 ui->horizontalLayout_ProcessFlow->addWidget(pipeA);
             }
             break;
 
-        case WidgetType::Pump:
-        {
-            Pump *pumpA = new Pump(global,widData.name,this);
-            ui->horizontalLayout_ProcessFlow->addWidget(pumpA);
+            case WidgetType::Pump:
+            {
+                Pump *pumpA = new Pump(global,widData.name,this);
+                ui->horizontalLayout_ProcessFlow->addWidget(pumpA);
 
-        }
-        break;
-
-        case WidgetType::Tvertne:
-        {
-            Tvertne *tvertneA = new Tvertne(global,widData.name,this);
-            ui->horizontalLayout_ProcessFlow->addWidget(tvertneA);
-
-        }
-        break;
-
-        case WidgetType::Valve:
-        {
-            Valve *valveA = new Valve(global,widData.name,this);
-            ui->horizontalLayout_ProcessFlow->addWidget(valveA);
-
-        }
-        break;
-
-
-        default:
-            qDebug() << "Wrong widget type !!! "  <<widData.type;
+            }
             break;
+
+            case WidgetType::Tvertne:
+            {
+                Tvertne *tvertneA = new Tvertne(global,widData.name,this);
+                ui->horizontalLayout_ProcessFlow->addWidget(tvertneA);
+
+            }
+            break;
+
+            case WidgetType::Valve:
+            {
+                Valve *valveA = new Valve(global,widData.name,this);
+                ui->horizontalLayout_ProcessFlow->addWidget(valveA);
+
+            }
+            break;
+
+
+            default:
+                qDebug() << "Wrong widget type !!! "  <<widData.type;
+                break;
+            }
+
+
+
         }
 
 
     }
 
 
+}
+
+void MainWindow::delAllWid()
+{
+    foreach (Global::wdataStruct widData, global.widHash){
+        // qDebug() << widData.name<< " exist ? " <<widData.ptrCurrWidget;
+        if(widData.ptrCurrWidget){
+            widData.ptrCurrWidget->close();
+            //  qDebug() << widData.name<< " close() ";
+        }
+    }
 }
 
 
@@ -383,5 +365,22 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     }
 
 
+}
+
+
+void MainWindow::on_pushButton_Dyno_clicked()
+{
+    qDebug() << "pushButton_Dyno_clicked() ";
+    currPage = 1;
+    delAllWid();
+    drawWidgets();
+}
+
+void MainWindow::on_pushButton_Mix_clicked()
+{
+    qDebug() << "pushButton_Mix_clicked()";
+    currPage = 0;
+    delAllWid();
+    drawWidgets();
 }
 

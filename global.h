@@ -2,11 +2,14 @@
 #define GLOBAL_H
 
 
+
 #include <QObject>
 #include <QHash>
  //#include <QTimer>
 
 
+ class WidgetService;
+ class WidgetDiagramElement;
 namespace ActuatorType
 {
 enum actT{
@@ -58,7 +61,7 @@ public:
         int adress = 0;
         int analog = 7; //VALUE
         int digital = 2; //VALUE
-    } ;
+    };
 
     struct wdataStruct {
         WidgetType::widgT type; // valve
@@ -73,8 +76,12 @@ public:
         int digitaSensAdr = 0;
         int windowNr = 0;
         bool formExist = false;
+        WidgetDiagramElement * ptrCurrWidget = nullptr;
+        WidgetService * ptrCurrWidgetService = nullptr;
+        int page = 0;
 
     };
+
     QHash<QString,act> actHash;
     QHash<QString,sens> sensHash;
     QHash<QString,wdataStruct> widHash;
@@ -87,14 +94,12 @@ public:
     int UIXresizeSize;
     int UIYresizeSize;
 
-
-
 private:
 
 
     void creatWidgList();
 
-    void addWidgList(WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options);
+    void addWidgList(WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page);
 
     void creatActList();
     void addActList(QString name, ActuatorType::actT tp, int addres);

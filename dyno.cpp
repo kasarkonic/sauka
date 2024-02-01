@@ -46,7 +46,7 @@ void Dyno::setNewPosition(float koef )
 void Dyno::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
-qDebug() << "DYNO paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
+    //qDebug() << "DYNO paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
     //   qDebug() << "Dyno::paintEvent";
     QPainter painter(this);
     QPen pen;

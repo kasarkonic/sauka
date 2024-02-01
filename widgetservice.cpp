@@ -13,9 +13,11 @@ WidgetService::WidgetService(WidgetDiagramElement *widgetElement, QWidget *paren
     , widgetElement(widgetElement)
 {
     currentWid =  widgetElement->settings.name;
-    qDebug() << "currentWid" << currentWid  ;
+    widgetElement->global.widHash[currentWid].ptrCurrWidgetService = this;
+
+    qDebug() << "currentWid name " << currentWid << widgetElement->global.widHash[currentWid].ptrCurrWidgetService ;
     ui->setupUi(this);
-    qDebug() << "???" << widgetElement->global.widHash[currentWid].startX << widgetElement->global.widHash[currentWid].startY  ;
+    //qDebug() << "???" << widgetElement->global.widHash[currentWid].startX << widgetElement->global.widHash[currentWid].startY  ;
     updateFormData();
 }
 void WidgetService::openWidgetServiceForm()
@@ -37,7 +39,8 @@ void WidgetService::openWidgetServiceForm()
 
 WidgetService::~WidgetService()
 {
-     widgetElement->global.widHash[currentWid].formExist = false;
+    widgetElement->global.widHash[currentWid].ptrCurrWidgetService = nullptr;
+    qDebug() << "WidgetService::~WidgetService()" ;
     delete ui;
 }
 
@@ -65,7 +68,8 @@ void WidgetService::updateSettings()
 
 void WidgetService::closeEvent(QCloseEvent *event)
 {
-    widgetElement->global.widHash[currentWid].formExist = false;
+    widgetElement->global.widHash[currentWid].ptrCurrWidgetService = nullptr;
+    qDebug() << "WidgetService::closeEvent" ;
 }
 void WidgetService::mousePressEvent(QMouseEvent *event)
 {

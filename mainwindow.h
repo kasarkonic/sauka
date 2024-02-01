@@ -39,6 +39,10 @@ private slots:
 
     void on_comboBox_currentIndexChanged(int index);
 
+    void on_pushButton_Dyno_clicked();
+
+    void on_pushButton_Mix_clicked();
+
 protected:
     void    resizeEvent(QResizeEvent* event) override;
     void    mousePressEvent(QMouseEvent *event) override;
@@ -67,10 +71,6 @@ private:
     //int areaY;
     //int areaX;
 
-    void openServiceFormValve();
-    void openServiceFormPump();
-    void openServiceFormPipe();
-
     void loadSettings();
     void saveSettings();
     QString settingsFile;
@@ -88,7 +88,10 @@ private:
     QStringList  cmbList;
     void drawWidgets();
     bool initTimer;
+    int currPage = 0;   // Mix = 0, Dyno = 1
+    void delAllWid();
 
+QString statusStr = "\u00A9 2023. vers. 0.0  tel. 29222201   02.02.2024  ";
 
 };
 

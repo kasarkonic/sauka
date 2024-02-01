@@ -65,7 +65,7 @@ void Valve::paintEvent(QPaintEvent *event)
     Q_UNUSED (event);
 
     //qDebug() << "Valve::paintEvent";
-    qDebug() << "Valve paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
+   // qDebug() << "Valve paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
     calcPoints(settings.options);
 

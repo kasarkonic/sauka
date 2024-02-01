@@ -47,7 +47,7 @@ void Tvertne::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
 
-    qDebug() << "Tvertne paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
+    //qDebug() << "Tvertne paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
     QPainter painter(this);
     QPen pen;

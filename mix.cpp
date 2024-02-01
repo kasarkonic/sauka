@@ -41,7 +41,7 @@ void Mix::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
 
-    qDebug() << "MIX paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
+    //qDebug() << "MIX paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
     QPainter painter(this);
     QPen pen;

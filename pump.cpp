@@ -100,7 +100,7 @@ void Pump::paintEvent(QPaintEvent *event)
 {
 
     Q_UNUSED (event);
-    qDebug() << "Pump::paintEvent" << settings.currX << settings.currY << settings.currSize;
+   // qDebug() << "Pump::paintEvent" << settings.currX << settings.currY << settings.currSize;
     QPainter painter(this);
     QPen pen;
     pen.setWidth(4);    //draw pipe

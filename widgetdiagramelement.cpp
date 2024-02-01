@@ -9,6 +9,7 @@ WidgetDiagramElement::WidgetDiagramElement(Global &global,QString name, QWidget 
 
 {
     settings.name = name;
+    global.widHash[settings.name].ptrCurrWidget = this;
 }
 
 void WidgetDiagramElement::setNewPosition(float koef)
@@ -44,13 +45,17 @@ void WidgetDiagramElement::mouseDoubleClickEvent(QMouseEvent *event)
 
     //global->widHash.[settings.name]->
 
-    if(!global.widHash[settings.name].formExist){
-        global.widHash[settings.name].formExist = true;
+    if(!global.widHash[settings.name].ptrCurrWidgetService){
+        //global.widHash[settings.name].formExist = true;
         WidgetService *serviceForm = new WidgetService( this );
         serviceForm->show();
     }
+    else{
     qDebug() << "UI form " << settings.name << " exist";
 
+        global.widHash[settings.name].ptrCurrWidgetService->raise();
+    global.widHash[settings.name].ptrCurrWidgetService->activateWindow();
+    }
 }
 
 void WidgetDiagramElement::timerEvent(QTimerEvent *event)

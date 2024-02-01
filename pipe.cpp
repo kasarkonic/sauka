@@ -119,7 +119,7 @@ void Pipe::saveSettings()
 void Pipe::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
-    qDebug() << "Pipe::paintEvent" << settings.currX << settings.currY;
+    //qDebug() << "Pipe::paintEvent" << settings.currX << settings.currY;
     QPainter painter(this);
     QPen pen;
     pen.setWidth(2);    //draw pipe
