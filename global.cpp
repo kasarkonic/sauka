@@ -27,12 +27,15 @@ Global::Global()
 
 
     creatWidgList();
-    creatActList();
-    creatSensList();
 
-    foreach(sens item,  sensList){
-        qDebug() << item.name << item.type ;
-    }
+    creatActList();
+    qDebug()  << "!!! test act name ";
+    creatSensList();
+    qDebug()  << "!!! test sensor name ";
+
+    //foreach(sens item,  sensList){
+    //    qDebug() << item.name << item.type ;
+    //}
 }
 
 
@@ -46,11 +49,9 @@ void Global::addActList(QString name, ActuatorType::actT tp, int addres)
     data.name = name;
     // data.analog = 0; VALUE
     // data.digital = 0; VALUE
-
     //actList.append(data);
     actList[addres] = (data);
 
-    qDebug()  << "!!! test actuator name ";
 }
 
 void Global::addSensList(QString name, SensorType::sensT tp, int addres)
@@ -65,8 +66,6 @@ void Global::addSensList(QString name, SensorType::sensT tp, int addres)
     sensList.append(data);
 
     sensList[addres] = data;
-    qDebug()  << "!!! test sensor name ";
-
 }
 
 void Global::addWidgList(WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page, int actAdr, int sensAdr1, int sensAdr2)
@@ -143,7 +142,7 @@ sensAdr2.digital     end switch close
 
 for pump:
 sensAdr1.digital     On/Off
-sensAdr1.analog     speed of flow
+sensAdr1.analog     speed of flow  1-100%
 
 
 
@@ -156,13 +155,11 @@ page = 3   draw on all pages
 
 void Global::creatWidgList()
 {
-    // type                      name         startX      startY  startSize  startSizeWi  options      page
-    addWidgList(WidgetType::Mix,        "Mix",    415,        443,    100, 0,  0,0,0,0,0);
-
-    addWidgList(WidgetType::Dyno,       "Dyno1",   751,         50,   70, 0,  0,3,0,0,0);
-
-    addWidgList(WidgetType::Tvertne,     "Tvertne 1",  225,     50,   50, 0,  0,0,0,0,0);
-    addWidgList(WidgetType::Tvertne,     "Tvertne 2",  375,     50,   50, 0,  0,0,0,0,0);
+    // type                      name         startX      startY  startSize  startSizeWi  options      page actAdr  sensAdr1  sensAdr2
+    addWidgList(WidgetType::Mix,        "Mix",    415,        443,    100, 0,  0,0,0,1,0);
+    addWidgList(WidgetType::Dyno,       "Dyno1",   751,         50,   70, 0,  0,3,0,2,0);
+    addWidgList(WidgetType::Tvertne,     "Tvertne 1",  225,     50,   50, 0,  0,0,0,3,0);
+    addWidgList(WidgetType::Tvertne,     "Tvertne 2",  375,     50,   50, 0,  0,0,0,4,0);
     addWidgList(WidgetType::Tvertne,     "Tvertne 3",  525,     50,   50, 0,  0,0,0,0,0);
     addWidgList(WidgetType::Tvertne,     "Tvertne 4",  650,     50,   50, 0,  0,0,0,0,0);
 
@@ -190,7 +187,15 @@ void Global::creatWidgList()
     addWidgList(WidgetType::Pipe,    "Pipe 10",    391,        298,    137,  10,  21,0,0,0,0);
     addWidgList(WidgetType::Pipe,     "Pipe 11",    492,        295,    133,  10,  160,0,0,0,0);
     addWidgList(WidgetType::Pipe,    "Pipe 12",    526,        295,    189,  10,  135,0,0,0,0);
-    addWidgList(WidgetType::Pipe,    "Pipe 13",    457,       85,    0,  0,  135,0,0,0,0);
+    addWidgList(WidgetType::Pipe,    "Pipe 13",    457,       567,      115,    10,  0,0,0,0,0);
+
+
+
+
+
+
+
+
 
     qDebug() << "create " << widHash.size() << "widgets";
 }

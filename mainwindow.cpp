@@ -9,8 +9,8 @@
 
 #include <QMouseEvent>
 #include "global.h"
-#include "widgetservice.h"
 #include <QDateTime>
+#include <QRandomGenerator>
 
 
 
@@ -105,6 +105,9 @@ void MainWindow::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
 
+
+   // global.widHash["Dyno1"].startX
+
    // if(initTimer){
        // initTimer = false;
         // timerId = startTimer(1000);
@@ -119,8 +122,24 @@ void MainWindow::timerEvent(QTimerEvent *event)
         setWindowTitle(currentTime);
 
         ui->statusbar->showMessage (statusStr + currentTime);
-        // qDebug() << currentTime ;
+
+        //QRandomGenerator gen1;
+       //  QRandomGenerator gen2;
+       // int randx = gen1.bounded(-10,10);
+       // int randy = gen2.bounded(-10,10);
+
+
+        int randx = QRandomGenerator::global()->bounded(-5,5);
+         int randy = QRandomGenerator::global()->bounded(-5,5);
+
+        global.widHash["Dyno1"].startX += randx;
+        global.widHash["Dyno1"].startY += randy;
+        global.widHash["Dyno1"].ptrCurrWidget->updateSettings();
+
+       // qDebug() << currentTime << randx << randy;
         att += 1;
+
+
 
  //   }
 }
@@ -248,7 +267,7 @@ void MainWindow::drawWidgets()
     foreach (Global::wdataStruct widData, global.widHash){
 
         if( widData.page == currPage || widData.page == 3 ){    // all pages
-            qDebug() << "drawWidgets Draw: " << widData.type << widData.name;
+            qDebug() << "drawWidgets Draw: " << widData.type << widData.name << "page" <<widData.page ;
             switch (widData.type) {
             case WidgetType::widgT::Dyno:
             {

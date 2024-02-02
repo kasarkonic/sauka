@@ -78,10 +78,10 @@ void WidgetDiagramElement::resizeEvent(QResizeEvent *event)
     }
 
     if(koefx >= koefy){
-        koef = koefy;
+        koef = koefx;
     }
     else{
-        koef = koefx;
+        koef = koefy;
     }
 
     if(koef == 0){

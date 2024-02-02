@@ -31,27 +31,28 @@ void Pump::setNewPosition(float koef)
     resize(settings.currSize,settings.currSize);
 }
 */
-/*
+
 void Pump::updateSettings()
 {
 
+    WidgetDiagramElement::updateSettings(); // base class
     qDebug() << "Pump updateSettings" << settings.options;
-    settings.startX = global.widData[settings.name].startX;
-    settings.startY = global.widData[settings.name].startY;
-    settings.startSize = global.widData[settings.name].startSize;
 
-    move(settings.currX,settings.currY);
-    resize(settings.currSize,settings.currSize);
 
-    if(settings.value == 0){        // 0 stop, 1 ->, 2<-)
-        killTimer(timerId);
+    int dSensAdr = global.widHash[widName].sensAddres1;
+    speed = (int)global.sensList[dSensAdr].analog /3;
+
+    if(global.sensList[dSensAdr].digital){
+         timerId = startTimer(150, Qt::CoarseTimer);
     }
     else{
-        timerId = startTimer(150, Qt::CoarseTimer);
+        killTimer(timerId);
     }
 
+
+
 }
-*/
+
 /*
 void Pump::loadSettings()
 {
@@ -133,17 +134,20 @@ void Pump::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED (event);
 
-    // qDebug() << "Pump timerEvent" <<settings.rotate << att;
+     qDebug() << "Pump timerEvent" <<timerId << att;
 
-    if(settings.value > 0){
-        int step = settings.value/10; //360/72;
+    if(timerId){
+        int step = (int)speed/10;
+        step = speed;
+         //settings.value/10; //360/72;
         att += step;
         if (att > 360)
             att = 0;
-    }
 
-    // qDebug() << "Pump::att " << att ;
-    //update();
+
+   //  qDebug() << "Pump::att " << att ;
+    update();
+    }
 }
 /*
 void Pump::mouseMoveEvent(QMouseEvent *event)

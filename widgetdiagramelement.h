@@ -53,12 +53,12 @@ protected:
    // Global &global;
     void setNewPosition(float koef);
    //virtual void updateSettings();
-
+    QString widName;
 private:
 
     int timerId = 0;
     int att = 100;
-    QString widName;
+
 
 };
 
