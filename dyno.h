@@ -10,7 +10,6 @@ class Dyno : public WidgetDiagramElement
 public:
     Dyno(Global &global,QString name, QWidget *parent = nullptr);
 
-
 protected:
     void    paintEvent(QPaintEvent *event) override;
  //   void    mousePressEvent(QMouseEvent *event) override;

@@ -12,6 +12,7 @@
 #include "tvertne.h"
 #include "global.h"
 #include "valve.h"
+#include "hwservice.h"
 
 
 
@@ -64,6 +65,8 @@ private:
     Pump *pumpA;
     Pipe *pipeA;
     Valve *valveA;
+    HWService *hwService;
+
 
     int valveStyleAngle;
     int minWidgSize;

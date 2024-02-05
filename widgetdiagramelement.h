@@ -12,7 +12,7 @@ class WidgetDiagramElement : public QWidget
 {
     Q_OBJECT
 public:
-    explicit WidgetDiagramElement( Global &global,QString name, QWidget *parent = nullptr);
+    explicit WidgetDiagramElement( Global &global, QString name, QWidget *parent = nullptr);
     Global &global;
     virtual void updateSettings();
 

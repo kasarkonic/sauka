@@ -4,33 +4,33 @@
 Tvertne::Tvertne(Global &global, QString name, QWidget *parent)
     : WidgetDiagramElement(global,name,parent)
 {
-    /*
+
     QPalette pal = QPalette();
-    //pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
-    pal.setColor(QPalette::Window, QColor(0, 0, 0, 50));
+    pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
+    // pal.setColor(QPalette::Window, QColor(100, 100, 100, 255));
+    pal.setColor(QPalette::Window, QColor(Qt::red));
     this->setAutoFillBackground(true);
-    this->setPalette(pal);
- */
+
     settings.startX = global.widHash[settings.name].startX;
     settings.startY = global.widHash[settings.name].startY;
     settings.startSize = global.widHash[settings.name].startSize;
- qDebug() << "TVERTNE SETT"<<settings.name <<settings.currX << settings.currY << settings.currSize ;
+    qDebug() << "TVERTNE SETT"<<settings.name <<settings.currX << settings.currY << settings.currSize ;
+
+    fill = 0;
+    full = 0;
 }
-/*
+
 void Tvertne::updateSettings()
 {
     qDebug() << "Tvertne::updateSettings()";
+    WidgetDiagramElement::updateSettings();
+    int dSensAdr = global.widHash[widName].sensAddres1;
+    fill = (int)global.sensList[dSensAdr].analog;
+    full = global.sensList[dSensAdr].digital;
 
-    settings.startX = global.widData[settings.name].startX;
-    settings.startY = global.widData[settings.name].startY;
-    settings.startSize = global.widData[settings.name].startSize;
-
-    move(settings.currX,settings.currY);
-    resize(settings.currSize,settings.currSize);
-    //update();
-
+    update();
 }
-*/
+
 /*
 void Tvertne::setNewPosition(float koef)
 {
@@ -51,28 +51,55 @@ void Tvertne::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
     QPen pen;
-    pen.setWidth(4);    //draw pipe
+    pen.setWidth(5);    //draw pipe
     pen.setColor(Qt::red);
     painter.setBrush(Qt::red);
+    painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(pen);
 
+    int b = (int)settings.currSize /10;
+
     QPoint points[4];
-
-    points[0] = QPoint(0 + settings.currX,0 + settings.currY);
-    points[1] = QPoint(settings.currSize + settings.currX,0 + settings.currY);
-    points[2] = QPoint(settings.currSize + settings.currX,settings.currSize + settings.currY);
-    points[3] = QPoint(0 + settings.currX,settings.currSize + settings.currY);
-
-    painter.drawPolygon(points,4);
 
     imgBackground= new QImage();
     imgBackground->load(":/pictures/fxup.png");
 
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
-    painter.drawImage(QPoint(), *imgBackground);
+     painter.drawImage(QPoint(), *imgBackground);
 
-  //  resize(settings.currSize,settings.currSize);
-  //  move(settings.currX,settings.currY);
+    if (full){
+        painter.drawLine(QPoint(b,b),QPoint(settings.currSize - b, b));
+    }
+
+
+    pen.setWidth(3);    //draw pipe
+    pen.setColor(Qt::black);
+    painter.setPen(pen);
+
+    points[0] = QPoint(b,b);
+    points[1] = QPoint(settings.currSize - b, b);
+    points[2] = QPoint(settings.currSize - b ,settings.currSize - b);
+    points[3] = QPoint(b,settings.currSize -b);
+
+    painter.drawLine(points[1],points[2]);
+    painter.drawLine(points[2],points[3]);
+    painter.drawLine(points[3],points[0]);
+
+    pen.setWidth(1);    //draw pipe
+    pen.setColor(Qt::black);
+    painter.setPen(pen);
+    painter.setBrush(QColor(0, 32, 255, 50));
+
+    int tf = fill * (settings.currSize - b)/100;
+
+    points[0] = QPoint(b,b + tf);
+    points[1] = QPoint(settings.currSize - b, b + tf);
+    points[2] = QPoint(settings.currSize - b ,settings.currSize - b);
+    points[3] = QPoint(b,settings.currSize -b);
+
+    painter.drawPolygon(points,4);
+
+
 }
 
 /*

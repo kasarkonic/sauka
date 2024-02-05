@@ -5,7 +5,6 @@
 
 Dyno::Dyno(Global &global,QString name, QWidget *parent)
     : WidgetDiagramElement(global, name, parent)
-
 {
  /*
     QPalette pal = QPalette();

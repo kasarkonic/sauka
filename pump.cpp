@@ -53,50 +53,6 @@ void Pump::updateSettings()
 
 }
 
-/*
-void Pump::loadSettings()
-{
-    QString settingsFile = Global::settingsFileName;
-    QSettings sett(settingsFile, QSettings::IniFormat);
-
-    QString sText = settings.name;
-    sett.beginGroup(sText);
-
-    settings.name = sett.value("name","Pump").toString();
-    settings.note = sett.value("note").toString();
-    settings.startX = sett.value("startX","100").toInt();
-    settings.startY = sett.value("startY","100").toInt();
-    settings.startSize = sett.value("radiusStart","100").toInt();
-    settings.speed = sett.value("speed","0").toInt();
-    settings.rotate = sett.value("rotate","0").toInt();
-
-    sett.endGroup();
-
-    qDebug() << "Pump updateSettings() load settings in group "<< sText  << settingsFile << settings.startX << settings.startY;
-    //    setNewPosition(1);
-    //? updateSettings();
-}
-
-void Pump::saveSettings()
-{
-    QString settingsFile = global.settingsFileNameGlobal::settingsFileName;
-    QSettings sett(settingsFile, QSettings::IniFormat);
-
-    QString sText = settings.name;
-    sett.beginGroup(sText);
-
-    sett.setValue("name", settings.name);
-    sett.setValue("note", settings.note);
-    sett.setValue("startX", settings.startX);
-    sett.setValue("startY", settings.startY);
-    sett.setValue("radiusStart", settings.startSize);
-    sett.setValue("speed", settings.speed);
-    sett.setValue("rotate", settings.rotate);   // on off
-
-    sett.endGroup();
-    qDebug() << "Valve, save settings in group " << sText;
-}
-*/
 void Pump::paintEvent(QPaintEvent *event)
 {
 
@@ -134,7 +90,7 @@ void Pump::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED (event);
 
-     qDebug() << "Pump timerEvent" <<timerId << att;
+    // qDebug() << "Pump timerEvent" <<timerId << att;
 
     if(timerId){
         int step = (int)speed/10;

@@ -1,5 +1,6 @@
 QT       += core gui
 
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -11,11 +12,15 @@ CONFIG += c++17
 SOURCES += \
     dyno.cpp \
     global.cpp \
+    hwlistsform.cpp \
+    hwservice.cpp \
     main.cpp \
     mainwindow.cpp \
     mix.cpp \
+    parmani.cpp \
     pipe.cpp \
     pump.cpp \
+    sensortablemodel.cpp \
     tvertne.cpp \
     valve.cpp \
     widgetdiagramelement.cpp \
@@ -24,17 +29,24 @@ SOURCES += \
 HEADERS += \
     dyno.h \
     global.h \
+    hwlistsform.h \
+    hwservice.h \
     mainwindow.h \
     mix.h \
+    parmani.h \
     pipe.h \
     pump.h \
+    sensortablemodel.h \
     tvertne.h \
     valve.h \
     widgetdiagramelement.h \
     widgetservice.h
 
 FORMS += \
+    hwlistsform.ui \
+    hwservice.ui \
     mainwindow.ui \
+    parmani.ui \
     widgetservice.ui
 
 # Default rules for deployment.

@@ -5,6 +5,7 @@
 #include <Qdebug>
 
 #include <QFile>
+#include "parmani.h"
 
 
 #include <QMouseEvent>
@@ -41,11 +42,11 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     global.UIYsize = size().height();
     qDebug() << "UI size" << global.UIXsize <<":" << global.UIYsize;
 
-    // initUI();
+     initUI();
     drawWidgets();
 
     initTimer = true;
-     timerId = startTimer(100);
+    timerId = startTimer(100);
 
 
     // connect(&valve,SIGNAL(openService()),this,SLOT(openServiceFormValve()));  old style
@@ -129,15 +130,15 @@ void MainWindow::timerEvent(QTimerEvent *event)
        // int randy = gen2.bounded(-10,10);
 
 
-        int randx = QRandomGenerator::global()->bounded(-5,5);
-         int randy = QRandomGenerator::global()->bounded(-5,5);
+       // int randx = QRandomGenerator::global()->bounded(-5,5);
+       //  int randy = QRandomGenerator::global()->bounded(-5,5);
 
-        global.widHash["Dyno1"].startX += randx;
-        global.widHash["Dyno1"].startY += randy;
-        global.widHash["Dyno1"].ptrCurrWidget->updateSettings();
+      //  global.widHash["Dyno1"].startX += randx;
+      //  global.widHash["Dyno1"].startY += randy;
+      //  global.widHash["Dyno1"].ptrCurrWidget->updateSettings();
 
        // qDebug() << currentTime << randx << randy;
-        att += 1;
+      //  att += 1;
 
 
 
@@ -190,7 +191,7 @@ void MainWindow::saveSettings()
 
 void MainWindow::resizeAllKoef(float koef)
 {
-
+Q_UNUSED (koef)
     // tvertne.setNewPosition(koef);
     // tvertne1.setNewPosition(koef);
 
@@ -319,15 +320,8 @@ void MainWindow::drawWidgets()
                 qDebug() << "Wrong widget type !!! "  <<widData.type;
                 break;
             }
-
-
-
         }
-
-
     }
-
-
 }
 
 void MainWindow::delAllWid()
@@ -365,20 +359,28 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 
     switch (index) {
     case 0:
-
         break;
+
     case 1:
-
         break;
+
     case 2:
-
         break;
+
     case 3:
-
+    {
+        HWService *hwService = new HWService(global,this);
+        hwService->show();
+    }
         break;
+
     case 4:
-
+    {
+        ParMani *parmani = new ParMani(global,this);
+        parmani->show();
+    }
         break;
+
     default:
         break;
     }

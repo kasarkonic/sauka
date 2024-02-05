@@ -5,7 +5,7 @@
 
 class Tvertne : public WidgetDiagramElement
 {
-     Q_OBJECT
+    Q_OBJECT
 public:
     Tvertne(Global &global,QString name, QWidget *parent = nullptr);
 
@@ -13,13 +13,15 @@ public:
 
 protected:
     void    paintEvent(QPaintEvent *event) override;
- //   void    mousePressEvent(QMouseEvent *event) override;
- //   void    mouseMoveEvent (QMouseEvent *event) override;
-//    void    mouseDoubleClickEvent(QMouseEvent *event) override;
-   //     void setNewPosition(float koef) ;
-// void updateSettings() override;
+    //   void    mousePressEvent(QMouseEvent *event) override;
+    //   void    mouseMoveEvent (QMouseEvent *event) override;
+    //    void    mouseDoubleClickEvent(QMouseEvent *event) override;
+    //     void setNewPosition(float koef) ;
+    void updateSettings() override;
 private:
-QImage *imgBackground;
+    QImage *imgBackground;
+    int fill;
+    int full;
 
 };
 

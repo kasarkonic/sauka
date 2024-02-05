@@ -17,9 +17,7 @@ class WidgetService;
 class WidgetService :  public  QWidget
 {
     Q_OBJECT
-
 public:
-        // explicit WidgetService(WidgetDiagramElement::widDataStruct &wsettings, QWidget *parent = nullptr);
     explicit WidgetService(WidgetDiagramElement *widgetElement, QWidget *parent = nullptr);
 
     ~WidgetService();

@@ -6,7 +6,6 @@
 
 
 WidgetService::WidgetService(WidgetDiagramElement *widgetElement, QWidget *parent)
-    //: wsettings(wsettings)
 
     : QWidget(parent)
     , ui(new Ui::WidgetService)

@@ -17,17 +17,23 @@ Mix::Mix(Global &global, QString name, QWidget *parent)
     settings.startY = global.widHash[settings.name].startY;
     settings.startSize = global.widHash[settings.name].startSize;
 }
-/*
+
 void Mix::updateSettings()
 {
-    settings.startX = global.widData[settings.name].startX;
-    settings.startY = global.widData[settings.name].startY;
-    settings.startSize = global.widData[settings.name].startSize;
+    WidgetDiagramElement::updateSettings(); // base class
+    qDebug() << "Mix updateSettings" << settings.options;
 
-    move(settings.currX,settings.currY);
-    resize(settings.currSize,settings.currSize);
+    int dSensAdr = global.widHash[widName].sensAddres1;
+    speed = (int)global.sensList[dSensAdr].analog /3;
+
+
+    if(global.sensList[dSensAdr].digital){
+         timerId = startTimer(150, Qt::CoarseTimer);
+    }
+    else{
+        killTimer(timerId);
+    }
 }
-*/
 /*
 void Mix::setNewPosition(float koef)
 { 
@@ -41,7 +47,7 @@ void Mix::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
 
-    //qDebug() << "MIX paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
+   // qDebug() << "MIX paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
     QPainter painter(this);
     QPen pen;
@@ -49,6 +55,13 @@ void Mix::paintEvent(QPaintEvent *event)
     pen.setColor(Qt::red);
     painter.setBrush(Qt::red);
     painter.setPen(pen);
+
+      imgBackground= new QImage();
+      imgBackground->load(":/pictures/mixeris3.png");
+
+      *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
+      painter.drawImage(QPoint(), *imgBackground);
+
 
     QPoint points[4];
 
@@ -59,14 +72,47 @@ void Mix::paintEvent(QPaintEvent *event)
 
     painter.drawPolygon(points,4);
 
-    imgBackground= new QImage();
-    imgBackground->load(":/pictures/mixeris3.png");
+    int rad = settings.currSize - 4;// minus pen
+    rad = (int)settings.currSize/5 ;
 
-    *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
-    painter.drawImage(QPoint(), *imgBackground);
+    float an = att * M_PI /180;
 
-  //  resize(settings.currSize,settings.currSize);
-  //  move(settings.currX,settings.currY);
+    points[0] = QPoint(rad * cos(an) + rad, rad * sin(an) + rad);
+    points[1] = QPoint(rad * cos(an + 2*M_PI/3) + rad, rad * sin(an + 2*M_PI/3) + rad);
+    points[2] = QPoint(rad * cos(an + 4*M_PI/3) + rad, rad * sin(an + 4*M_PI/3) + rad);
+
+    pen.setWidth(2);
+    pen.setColor(Qt::blue);
+    painter.setBrush(triangColor);
+    painter.setPen(pen);
+    painter.drawPolygon(points,3);
+
+
+
+
+
+
+
+  //  imgBackground= new QImage();
+  //  imgBackground->load(":/pictures/mixeris3.png");
+
+  //  *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
+  //  painter.drawImage(QPoint(), *imgBackground);
+
+
+}
+
+void Mix::timerEvent(QTimerEvent *event)
+{
+    if(timerId){
+        int step = (int)speed/10;
+        step = speed;
+        att += step;
+        if (att > 360){
+            att = 0;
+        }
+        update();
+    }
 }
 
 /*
